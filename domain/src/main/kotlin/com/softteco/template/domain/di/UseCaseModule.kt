@@ -7,6 +7,10 @@ import com.softteco.template.domain.usecase.apientry.GetAllApiEntriesUseCaseImpl
 import com.softteco.template.domain.usecase.apientry.GetApiEntryByNameUseCase
 import com.softteco.template.domain.usecase.apientry.ToggleFavoritesUseCase
 import com.softteco.template.domain.usecase.apientry.ToggleFavoritesUseCaseImpl
+import com.softteco.template.domain.usecase.user.LoginUseCase
+import com.softteco.template.domain.usecase.user.LoginUseCaseImpl
+import com.softteco.template.domain.usecase.user.RegistrationUseCase
+import com.softteco.template.domain.usecase.user.RegistrationUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -34,5 +38,13 @@ abstract class UseCaseModule {
     internal abstract fun bindGetApiEntryByNameUseCase(
         useCaseImpl: GetApiEntryByNameUseCaseImpl1
     ): GetApiEntryByNameUseCase
+
+    @Binds
+    @Singleton
+    internal abstract fun bindLoginUseCase(useCaseImpl: LoginUseCaseImpl): LoginUseCase
+
+    @Binds
+    @Singleton
+    internal abstract fun bindRegistrationUseCase(useCaseImpl: RegistrationUseCaseImpl): RegistrationUseCase
 
 }

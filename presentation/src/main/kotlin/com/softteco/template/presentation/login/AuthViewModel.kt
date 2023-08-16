@@ -8,14 +8,18 @@ import androidx.lifecycle.viewModelScope
 import com.softteco.template.domain.model.user.*
 import com.softteco.template.domain.repository.user.LoginResponse
 import com.softteco.template.domain.repository.user.RegisterResponse
+import com.softteco.template.domain.usecase.user.LoginUseCase
+import com.softteco.template.domain.usecase.user.RegistrationUseCase
 
-import com.softteco.template.domain.usecase.user.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(private val useCase: UseCases) : ViewModel() {
+class AuthViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    private val registrationUseCase: RegistrationUseCase
+) : ViewModel() {
 
     var loginApiResponse by mutableStateOf<LoginResponse>(ApiResponse.Success(false))
 
@@ -26,7 +30,7 @@ class AuthViewModel @Inject constructor(private val useCase: UseCases) : ViewMod
     ) = viewModelScope.launch {
         loginApiResponse = ApiResponse.Loading
         loginApiResponse =
-            useCase.login(userAuth)
+            loginUseCase.invoke(userAuth)
     }
 
     fun register(
@@ -35,9 +39,7 @@ class AuthViewModel @Inject constructor(private val useCase: UseCases) : ViewMod
         viewModelScope.launch {
             registerApiResponse = ApiResponse.Loading
             registerApiResponse =
-                useCase.register(
-                    user
-                )
+                registrationUseCase.invoke(user)
         }
     }
 }

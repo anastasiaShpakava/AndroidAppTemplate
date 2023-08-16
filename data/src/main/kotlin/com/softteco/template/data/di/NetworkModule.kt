@@ -81,12 +81,4 @@ object NetworkModule {
     fun provideUserRepository(
         apiService: UserApiService
     ): UserRepository = UserRepositoryImpl(apiService)
-
-    @Provides
-    fun provideUseCases(
-        repo: UserRepository
-    ) = UseCases(
-        login = Login(repo),
-        register = Registration(repo)
-    )
 }
