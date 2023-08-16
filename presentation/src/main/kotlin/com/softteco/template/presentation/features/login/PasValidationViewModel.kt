@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login
+package com.softteco.template.presentation.features.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softteco.template.presentation.login.loginComponents.registration.PasswordValidationState
-import com.softteco.template.presentation.login.loginComponents.registration.ValidatePassword
+import com.softteco.template.presentation.features.login.loginComponents.registration.PasswordValidationState
+import com.softteco.template.presentation.features.login.loginComponents.registration.ValidatePassword
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.mapLatest

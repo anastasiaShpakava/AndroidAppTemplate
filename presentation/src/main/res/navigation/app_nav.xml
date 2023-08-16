@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_main_nav_host" />
     <fragment
         android:id="@+id/loginComposeFragment"
-        android:name="com.softteco.template.presentation.login.LoginComposeFragment"
+        android:name="com.softteco.template.presentation.features.login.LoginComposeFragment"
         android:label="LoginComposeFragment" >
         <action
             android:id="@+id/action_loginComposeFragment_to_registrationComposeFragment"
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationComposeFragment"
-        android:name="com.softteco.template.presentation.login.RegistrationComposeFragment"
+        android:name="com.softteco.template.presentation.features.login.RegistrationComposeFragment"
         android:label="RegistrationComposeFragment" >
         <action
             android:id="@+id/action_registrationComposeFragment_to_loginComposeFragment"

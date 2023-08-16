@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents.login
+package com.softteco.template.presentation.features.login.loginComponents.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -30,15 +30,14 @@ import androidx.navigation.NavDirections
 
 import com.softteco.template.domain.model.user.LoginAuthDto
 import com.softteco.template.presentation.R
-import com.softteco.template.presentation.login.AuthViewModel
-import com.softteco.template.presentation.login.LoginComposeFragmentDirections
+import com.softteco.template.presentation.features.login.AuthViewModel
+import com.softteco.template.presentation.features.login.LoginComposeFragmentDirections
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    onNavigateToRegistration: (NavDirections) -> Unit,
-    onNavigateToResetPassword: (NavDirections) -> Unit
+    onNavigateToRegistration: (NavDirections) -> Unit
 ) {
 
     val authViewModel: AuthViewModel = hiltViewModel()
@@ -148,8 +147,7 @@ fun LoginScreen(
                             emailErrorState.value = false
                             authViewModel.login(
                                 LoginAuthDto(
-                                    email.value.text,
-                                    password.value.text
+                                    email.value.text, password.value.text
                                 )
                             )
                         }
@@ -168,13 +166,10 @@ fun LoginScreen(
         }
         Spacer(modifier = Modifier.height(20.dp))
         ClickableText(
-            text = AnnotatedString(stringResource(id = R.string.forgot_password)),
-            onClick = {
-               //TODO - go to Forgot Password
-            },
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily.Default
+            text = AnnotatedString(stringResource(id = R.string.forgot_password)), onClick = {
+                //TODO - go to Forgot Password
+            }, style = TextStyle(
+                fontSize = 14.sp, fontFamily = FontFamily.Default
             )
         )
     }

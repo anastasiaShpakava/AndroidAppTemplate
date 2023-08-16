@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents.registration
+package com.softteco.template.presentation.features.login.loginComponents.registration
 
 import android.annotation.SuppressLint
 import android.net.Uri
@@ -17,10 +17,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDirections
 import com.softteco.template.domain.model.user.CreateUserDto
 import com.softteco.template.presentation.R
-import com.softteco.template.presentation.login.AuthViewModel
-import com.softteco.template.presentation.login.PasValidationViewModel
-import com.softteco.template.presentation.login.loginComponents.*
-import com.softteco.template.presentation.login.loginComponents.login.PasswordFieldComponent
+import com.softteco.template.presentation.features.login.AuthViewModel
+import com.softteco.template.presentation.features.login.PasValidationViewModel
+import com.softteco.template.presentation.features.login.loginComponents.*
+import com.softteco.template.presentation.features.login.loginComponents.login.PasswordFieldComponent
 import kotlinx.coroutines.*
 import java.util.*
 

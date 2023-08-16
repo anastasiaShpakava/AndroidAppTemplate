@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents
+package com.softteco.template.presentation.features.login.loginComponents
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.material.icons.Icons

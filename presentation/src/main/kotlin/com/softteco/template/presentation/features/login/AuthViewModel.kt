@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login
+package com.softteco.template.presentation.features.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

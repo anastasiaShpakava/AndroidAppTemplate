@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login
+package com.softteco.template.presentation.features.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.softteco.template.presentation.login.loginComponents.login.LoginScreen
+
+import com.softteco.template.presentation.features.login.loginComponents.registration.RegistrationScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginComposeFragment : Fragment() {
+class RegistrationComposeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                LoginScreen(onNavigateToRegistration = { dest -> findNavController().navigate(dest) },
-                    onNavigateToResetPassword = { dest -> findNavController().navigate(dest) })
+                RegistrationScreen(onNavigateToLogin = { dest -> findNavController().navigate(dest) })
             }
         }
     }

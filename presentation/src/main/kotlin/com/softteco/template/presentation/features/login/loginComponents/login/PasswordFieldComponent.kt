@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents.login
+package com.softteco.template.presentation.features.login.loginComponents.login
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons

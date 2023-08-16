@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents
+package com.softteco.template.presentation.features.login.loginComponents
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker

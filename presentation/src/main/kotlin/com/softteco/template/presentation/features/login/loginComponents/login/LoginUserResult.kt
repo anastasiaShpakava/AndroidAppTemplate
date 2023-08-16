@@ -1,12 +1,12 @@
-package com.softteco.template.presentation.login.loginComponents.login
+package com.softteco.template.presentation.features.login.loginComponents.login
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.softteco.template.domain.model.user.ApiResponse
-import com.softteco.template.presentation.login.AuthViewModel
-import com.softteco.template.presentation.login.loginComponents.ProgressBar
+import com.softteco.template.presentation.features.login.AuthViewModel
+import com.softteco.template.presentation.features.login.loginComponents.ProgressBar
 
 @Composable
 fun LoginUserResult(

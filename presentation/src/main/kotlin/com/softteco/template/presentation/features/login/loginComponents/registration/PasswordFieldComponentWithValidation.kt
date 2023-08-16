@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents.registration
+package com.softteco.template.presentation.features.login.loginComponents.registration
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.*
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 
 
 import com.softteco.template.presentation.R
-import com.softteco.template.presentation.login.PasValidationViewModel
+import com.softteco.template.presentation.features.login.PasValidationViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)

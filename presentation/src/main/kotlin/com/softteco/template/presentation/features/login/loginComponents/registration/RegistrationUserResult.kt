@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents.registration
+package com.softteco.template.presentation.features.login.loginComponents.registration
 
 import android.widget.Toast
 import androidx.compose.runtime.*
@@ -9,11 +9,12 @@ import androidx.navigation.NavDirections
 
 import com.softteco.template.domain.model.user.ApiResponse
 import com.softteco.template.presentation.R
-import com.softteco.template.presentation.login.*
+import com.softteco.template.presentation.features.login.AuthViewModel
+import com.softteco.template.presentation.features.login.RegistrationComposeFragmentDirections
 
-import com.softteco.template.presentation.login.loginComponents.CustomAlertDialog
+import com.softteco.template.presentation.features.login.loginComponents.CustomAlertDialog
 
-import com.softteco.template.presentation.login.loginComponents.ProgressBar
+import com.softteco.template.presentation.features.login.loginComponents.ProgressBar
 
 
 @Composable

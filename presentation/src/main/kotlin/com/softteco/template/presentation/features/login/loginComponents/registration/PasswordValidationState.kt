@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.login.loginComponents.registration
+package com.softteco.template.presentation.features.login.loginComponents.registration
 
 data class PasswordValidationState(
     val hasMinimum: Boolean = false,
