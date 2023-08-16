@@ -8,7 +8,7 @@ import javax.inject.Inject
 internal class RegistrationUseCaseImpl @Inject constructor(private val repository: UserRepository) :
     RegistrationUseCase {
     override suspend fun invoke(user: CreateUserDto): RegisterResponse {
-      return  repository.registration(
+        return repository.registration(
             user
         )
     }
