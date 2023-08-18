@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Base class for all Fragments
+ * @property binding binds the views in a layout XML to fields
  */
 @AndroidEntryPoint
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
@@ -19,6 +20,9 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     private var snackBar: Snackbar? = null
 
+    /**
+     * Return the View for the fragment's UI
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStatusBarColor()
@@ -41,6 +45,9 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
      */
     abstract fun subscribeUi()
 
+    /**
+     * Method to display error message
+     */
     protected fun showError(msg: String, onRetry: () -> Unit) {
         view?.let {
             snackBar = Snackbar.make(it, msg, Snackbar.LENGTH_INDEFINITE)
@@ -66,7 +73,7 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
     /**
      * Method to dismiss the displayed message.
      */
-    protected fun hideError() {
+    private fun hideError() {
         snackBar?.dismiss()
     }
 }

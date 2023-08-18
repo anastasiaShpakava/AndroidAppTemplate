@@ -8,6 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 
+/**
+ * Main application theme component
+ */
 @Composable
 fun AppTheme(
     modifier: Modifier = Modifier,

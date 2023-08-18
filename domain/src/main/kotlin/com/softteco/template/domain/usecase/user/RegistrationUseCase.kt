@@ -3,6 +3,12 @@ package com.softteco.template.domain.usecase.user
 import com.softteco.template.domain.model.user.CreateUserDto
 import com.softteco.template.domain.repository.user.RegisterResponse
 
+/**
+ * Interface of API Registration
+ */
 interface RegistrationUseCase {
+    /**
+     * UseCase Method to handling creating new user (registration)
+     */
     suspend operator fun invoke(user: CreateUserDto): RegisterResponse
 }

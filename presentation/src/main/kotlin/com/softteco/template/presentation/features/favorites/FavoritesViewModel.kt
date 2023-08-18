@@ -10,6 +10,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+/**
+ * Provide viewModel for favourites
+ * @property state favourites api list
+ */
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     apiRepository: ApisRepository,

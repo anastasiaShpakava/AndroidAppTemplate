@@ -14,6 +14,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Provide viewModel for API details
+ */
 @HiltViewModel
 class ApiDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,

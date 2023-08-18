@@ -53,6 +53,9 @@ import com.softteco.template.presentation.common.TextStyles
 import com.softteco.template.presentation.common.popOrFinish
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Provide fragment with API information
+ */
 @AndroidEntryPoint
 class ApiDetailsFragment : ComposeFragment() {
 
@@ -122,7 +125,10 @@ internal fun Toolbar(
         ),
         navigationIcon = {
             IconButton(onClick = onBackPressed) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back Btn")
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack, contentDescription = stringResource
+                        (R.string.back_btn_description)
+                )
             }
         },
         actions = {

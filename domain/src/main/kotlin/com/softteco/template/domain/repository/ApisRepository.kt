@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 /**
  * Interface of APIs Repository to expose to other module
+ * @property allEntries entries list
+ * @property favorites entries by favourite
  */
 interface ApisRepository {
 
@@ -19,9 +21,18 @@ interface ApisRepository {
      */
     fun fetchApiEntries(): Flow<Output<List<ApiEntry>>>
 
+    /**
+     * Method to update entry
+     */
     suspend fun updateEntry(entry: ApiEntry)
 
+    /**
+     * Method to get entry by name
+     */
     fun apiEntry(name: String): Flow<ApiEntry?>
 
+    /**
+     * Method to refresh entries list
+     */
     fun refresh()
 }

@@ -27,8 +27,8 @@ class AuthViewModel @Inject constructor(
     private val registrationUseCase: RegistrationUseCase
 ) : ViewModel() {
 
-    private var loginApiResponse by mutableStateOf<LoginResponse>(ApiResponse.Success(false))
-    private var registerApiResponse by mutableStateOf<RegisterResponse>(ApiResponse.Success(false))
+    var loginApiResponse by mutableStateOf<LoginResponse>(ApiResponse.Success(false))
+    var registerApiResponse by mutableStateOf<RegisterResponse>(ApiResponse.Success(false))
 
     /**
      * login handling function

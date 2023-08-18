@@ -5,6 +5,11 @@ import com.softteco.template.domain.model.ApiEntry
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+/**
+ * Entry API Model
+ * @param count entries count
+ * @param entries entries list
+ */
 @JsonClass(generateAdapter = true)
 data class ApiEntryApiModels(
     @Json(name = "count")
@@ -13,6 +18,16 @@ data class ApiEntryApiModels(
     val entries: List<ApiEntryApiModel>
 )
 
+/**
+ * Entry API Model data class
+ * @param name
+ * @param auth
+ * @param category
+ * @param cors
+ * @param description
+ * @param https
+ * @param link
+ */
 @JsonClass(generateAdapter = true)
 data class ApiEntryApiModel(
     @Json(name = "API")

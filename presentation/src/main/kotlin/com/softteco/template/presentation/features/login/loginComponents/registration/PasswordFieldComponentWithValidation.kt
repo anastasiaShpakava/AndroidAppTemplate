@@ -1,6 +1,5 @@
 package com.softteco.template.presentation.features.login.loginComponents.registration
 
-import android.content.Context
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -41,12 +39,9 @@ import com.softteco.template.presentation.features.login.PasValidationViewModel
 fun PasswordFieldComponentWithValidation(
     viewModel: PasValidationViewModel,
     fieldNameErrorState: MutableState<Boolean>,
-    passwordVisibility: MutableState<Boolean>,
-    context: Context = LocalContext.current
+    passwordVisibility: MutableState<Boolean>
 ) {
     val passwordError by viewModel.passwordError.collectAsState()
-
-    val context = LocalContext.current
 
     Column {
         OutlinedTextField(value = viewModel.password, onValueChange = {
@@ -66,7 +61,7 @@ fun PasswordFieldComponentWithValidation(
                     } else {
                         Icons.Default.Visibility
                     },
-                    contentDescription = context.getString(R.string.visibility),
+                    contentDescription = stringResource(R.string.visibility),
                     tint = Color.Black
                 )
             }
@@ -83,23 +78,26 @@ fun PasswordFieldComponentWithValidation(
 
         Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             ConditionRow(
-                condition = context.getString(R.string.registration_password_condition1),
+                condition = stringResource(R.string.registration_password_condition1),
                 check = passwordError.hasMinimum
             )
             ConditionRow(
-                condition = context.getString(R.string.registration_password_condition1),
+                condition = stringResource(R.string.registration_password_condition1),
                 check = passwordError.hasCapitalizedLetter
             )
         }
     }
 }
 
+/**
+ * Provide animate changing of the input password
+ */
 @Composable
 fun ConditionRow(
     condition: String, check: Boolean
 ) {
     val color by animateColorAsState(
-        targetValue = if (check) Color.Green else Color.Red, label = "text color"
+        targetValue = if (check) Color.Green else Color.Red
     )
 
     val icon = if (check) {
@@ -110,7 +108,9 @@ fun ConditionRow(
 
     Row {
         Icon(
-            imageVector = icon, tint = color, contentDescription = "status icon"
+            imageVector = icon,
+            tint = color,
+            contentDescription = stringResource(id = R.string.icon_description)
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(

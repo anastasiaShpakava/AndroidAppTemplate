@@ -1,5 +1,6 @@
 package com.softteco.template.data.repository.user
 
+import com.softteco.template.data.ApiException
 import com.softteco.template.data.source.remote.UserApiService
 import com.softteco.template.domain.model.user.ApiResponse
 import com.softteco.template.domain.model.user.CreateUserDto
@@ -10,20 +11,30 @@ import com.softteco.template.domain.repository.user.UserRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * UserRepository interface implementation
+ */
 @Singleton
 class UserRepositoryImpl @Inject constructor(
     private val apiService: UserApiService
 ) : UserRepository {
 
+    /**
+     * Login implementation
+     */
     override suspend fun login(userAuth: LoginAuthDto): LoginResponse {
         return try {
             apiService.login(userAuth)
             ApiResponse.Success(true)
-        } catch (e: Exception) {
+            throw ApiException("This is a detail message for the api exception")
+        } catch (e: ApiException) {
             ApiResponse.Failure(e)
         }
     }
 
+    /**
+     * Registration implementation
+     */
     override suspend fun registration(
         user: CreateUserDto
     ): RegisterResponse {
@@ -32,7 +43,8 @@ class UserRepositoryImpl @Inject constructor(
                 user
             )
             ApiResponse.Success(true)
-        } catch (e: Exception) {
+            throw ApiException("This is a detail message for the api exception")
+        } catch (e: ApiException) {
             ApiResponse.Failure(e)
         }
     }

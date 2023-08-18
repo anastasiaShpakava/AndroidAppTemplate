@@ -5,6 +5,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+/**
+ * Test styles
+ * @property headlineLarge
+ * @property headlineMedium
+ * @property headlineSmall
+ * @property overlineLarge
+ * @property screenTitle
+ * @property titleMedium
+ * @property titleSmall
+ * @property bodyLarge
+ * @property bodyMedium
+ * @property bodySmall
+ * @property buttonPrimary
+ * @property buttonSecondary
+ */
 object TextStyles {
     val headlineLarge = TextStyle(
         platformStyle = PlatformTextStyle(includeFontPadding = false),
@@ -82,7 +97,7 @@ object TextStyles {
         lineHeight = 20.sp,
     )
 
-    val buttonSecondary = TextStyle(
+    val buttonSecondary: TextStyle = TextStyle(
         platformStyle = PlatformTextStyle(includeFontPadding = false),
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,

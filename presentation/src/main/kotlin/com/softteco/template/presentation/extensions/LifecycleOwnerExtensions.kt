@@ -7,6 +7,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/**
+ * Method to start work with the initialized lifecycle state
+ */
 fun LifecycleOwner.launchWhileStarted(block: suspend CoroutineScope.() -> Unit) {
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {

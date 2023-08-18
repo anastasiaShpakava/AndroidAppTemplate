@@ -10,12 +10,18 @@ import com.softteco.template.presentation.R
 import com.softteco.template.presentation.databinding.ItemApiEntryBinding
 import com.softteco.template.presentation.extensions.setOnSafeClickListener
 
+/**
+ * Provide adapter for API list
+ */
 class ApiListAdapter(
     private val items: List<ApiEntry>,
     private val onClick: (position: Int) -> Unit,
     private val onClickFavorite: (position: Int) -> Unit,
 ) : RecyclerView.Adapter<ApiEntryViewHolder>() {
 
+    /**
+     * Returns new ViewHolder that holds a View of the given view type
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApiEntryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemApiEntryBinding.inflate(layoutInflater, parent, false)
@@ -31,6 +37,9 @@ class ApiListAdapter(
         return holder
     }
 
+    /**
+     * Method to display the data at the specified position.
+     */
     override fun onBindViewHolder(holder: ApiEntryViewHolder, position: Int) {
         val item = items[position]
         holder.binding.run {
@@ -41,11 +50,23 @@ class ApiListAdapter(
             } else {
                 R.drawable.ic_favorite_outline_white
             }
-            ivFavorite.setImageDrawable(AppCompatResources.getDrawable(holder.itemView.context, favoriteRes))
+            ivFavorite.setImageDrawable(
+                AppCompatResources.getDrawable(
+                    holder.itemView.context,
+                    favoriteRes
+                )
+            )
         }
     }
 
+    /**
+     *  Method to get total number of items in the data set held by the adapter
+     */
     override fun getItemCount(): Int = items.size
 }
 
+/**
+ * Provide viewHolder for adapter
+ * @property binding ItemApiEntryBinding
+ */
 class ApiEntryViewHolder(val binding: ItemApiEntryBinding) : RecyclerView.ViewHolder(binding.root)

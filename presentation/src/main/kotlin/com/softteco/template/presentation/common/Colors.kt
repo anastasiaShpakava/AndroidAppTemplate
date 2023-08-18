@@ -4,6 +4,9 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Dark colors description
+ */
 val DarkColors = darkColorScheme(
     primary = Color(0xFF33303C),
     onPrimary = Color(0xFFFEFEFE),
@@ -21,6 +24,9 @@ val DarkColors = darkColorScheme(
     onError = Color(0xFFFFFFFF),
 )
 
+/**
+ * Light colors description
+ */
 val LightColors = lightColorScheme(
     primary = Color(0xFFFFFFFF),
     onPrimary = Color(0xFF33303C),

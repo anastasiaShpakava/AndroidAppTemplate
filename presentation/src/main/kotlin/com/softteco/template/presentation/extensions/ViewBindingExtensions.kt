@@ -10,9 +10,17 @@ import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+/**
+ * Return fragment's UI
+ */
 fun <T : ViewBinding> Fragment.viewBinding(viewBindingFactory: (View) -> T) =
     FragmentViewBindingDelegate(this, viewBindingFactory)
 
+/**
+ * Provide fragment's UI
+ * @property fragment defines fragment
+ * @property viewBindingFactory provide factory
+ */
 class FragmentViewBindingDelegate<T : ViewBinding>(
     val fragment: Fragment,
     val viewBindingFactory: (View) -> T
@@ -34,11 +42,13 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
                 }
 
             override fun onCreate(owner: LifecycleOwner) {
-                fragment.viewLifecycleOwnerLiveData.observeForever(viewLifecycleOwnerLiveDataObserver)
+                fragment.viewLifecycleOwnerLiveData
+                    .observeForever(viewLifecycleOwnerLiveDataObserver)
             }
 
             override fun onDestroy(owner: LifecycleOwner) {
-                fragment.viewLifecycleOwnerLiveData.removeObserver(viewLifecycleOwnerLiveDataObserver)
+                fragment.viewLifecycleOwnerLiveData
+                    .removeObserver(viewLifecycleOwnerLiveDataObserver)
             }
         })
     }

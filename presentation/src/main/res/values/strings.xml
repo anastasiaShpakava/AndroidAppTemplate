@@ -12,6 +12,8 @@
     <string name="label_cors">CORS support</string>
     <string name="label_category">Category</string>
     <string name="label_link">Link</string>
+    <string name="back_btn_description">back button</string>
+    <string name="icon_description">status icon</string>
 
     <string name="api">Api</string>
     <string name="favorites">Favorites</string>

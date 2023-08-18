@@ -18,6 +18,9 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import com.softteco.template.domain.usecase.apientry.GetApiEntryByNameUseCaseImpl as GetApiEntryByNameUseCaseImpl1
 
+/**
+ * Provide Use cases
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class UseCaseModule {

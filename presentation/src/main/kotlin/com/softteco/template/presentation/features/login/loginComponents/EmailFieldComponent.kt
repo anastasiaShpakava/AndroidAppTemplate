@@ -25,7 +25,6 @@ fun EmailFieldComponent(
     fieldNameErrorState: MutableState<Boolean>,
     fieldNameStr: Int
 ) {
-    val context = LocalContext.current
 
     OutlinedTextField(
         value = fieldName.value,
@@ -48,7 +47,7 @@ fun EmailFieldComponent(
     } else if (fieldName.value.text.isNotEmpty() && !EMAIL_PATTERN.toRegex()
             .matches(fieldName.value.text)
     ) {
-        Text(text = context.getString(R.string.email_error), color = Color.Red)
+        Text(text = stringResource(R.string.email_error), color = Color.Red)
         fieldNameErrorState.value = true
     }
 }

@@ -19,10 +19,16 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
+/**
+ * Provide Network Module
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /**
+     * Provide HttpLoggingInterceptor for Retrofit
+     */
     @Provides
     fun provideHTTPLoggingInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor()
@@ -30,53 +36,61 @@ object NetworkModule {
         return interceptor
     }
 
+    /**
+     * Provide OkHttpClient for Retrofit
+     */
     @Provides
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
+        return OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
     }
 
+    /**
+     * Provide entry API
+     */
     @Provides
     @Named("PublicApi")
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val moshi = Moshi.Builder().build()
         val converterFactory: Converter.Factory = MoshiConverterFactory.create(moshi)
 
-        return Retrofit.Builder()
-            .baseUrl(Config.BASE_URL)
-            .addConverterFactory(converterFactory)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .client(okHttpClient)
-            .build()
+        return Retrofit.Builder().baseUrl(Config.BASE_URL).addConverterFactory(converterFactory)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory()).client(okHttpClient).build()
     }
 
+    /**
+     * Provide user API
+     */
     @Provides
     @Named("UserApi")
     fun provideRetrofitUser(okHttpClient: OkHttpClient): Retrofit {
         val moshi = Moshi.Builder().build()
         val converterFactory: Converter.Factory = MoshiConverterFactory.create(moshi)
 
-        return Retrofit.Builder()
-            .baseUrl(Config.USER_URL)
-            .addConverterFactory(converterFactory)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .client(okHttpClient)
-            .build()
+        return Retrofit.Builder().baseUrl(Config.USER_URL).addConverterFactory(converterFactory)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory()).client(okHttpClient).build()
     }
 
+    /**
+     * Provide service for entry API
+     */
     @Provides
     fun provideApiService(@Named("PublicApi") retrofit: Retrofit): PublicApi {
         return retrofit.create(PublicApi::class.java)
     }
 
+    /**
+     * Provide service for user API
+     */
     @Singleton
     @Provides
     fun provideLoginService(@Named("UserApi") retrofit: Retrofit): UserApiService =
         retrofit.create(UserApiService::class.java)
 
+    /**
+     * Provide repository for user API
+     */
     @Provides
     fun provideUserRepository(
         apiService: UserApiService

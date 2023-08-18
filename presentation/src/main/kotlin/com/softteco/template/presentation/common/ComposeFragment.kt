@@ -17,18 +17,33 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 
+/**
+ * Base fragment
+ */
 abstract class ComposeFragment : Fragment() {
 
+    /**
+     * Return the View for the fragment's UI
+     */
     @OptIn(ExperimentalFoundationApi::class)
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // disable the stretchy overscroll behavior on android S, it causes major issues with nested scrolling
-        val overscrollConfig = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) OverscrollConfiguration() else null
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        // disable the stretchy overscroll behavior on android S,
+        // it causes major issues with nested scrolling
+        val overscrollConfig =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) OverscrollConfiguration() else null
         return ComposeView(requireContext()).apply {
-            this.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            this.setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
             setContent {
                 AppTheme {
                     CompositionLocalProvider(LocalOverscrollConfiguration provides overscrollConfig) {
-                        Box(modifier = if (applyStatusBarPadding) Modifier.statusBarsPadding() else Modifier) {
+                        Box(
+                            modifier = if (applyStatusBarPadding) Modifier.statusBarsPadding()
+                            else Modifier
+                        ) {
                             this@ComposeFragment.Content()
                         }
                     }
@@ -37,8 +52,14 @@ abstract class ComposeFragment : Fragment() {
         }
     }
 
+    /**
+     * Property defines is status bar padding or not
+     */
     open val applyStatusBarPadding: Boolean = true
 
+    /**
+     * Provide content
+     */
     @Composable
     abstract fun Content()
 }

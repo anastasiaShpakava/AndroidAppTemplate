@@ -10,6 +10,9 @@ import com.softteco.template.presentation.extensions.launchWhileStarted
 import com.softteco.template.presentation.extensions.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 
+/**
+ * Provide splash fragment
+ */
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
     override val binding by viewBinding(FragmentSplashBinding::bind)

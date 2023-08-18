@@ -18,6 +18,9 @@ class SafeClickListener(
 
     private var lastClickTime: Long = 0L
 
+    /**
+     * Method to click handling
+     */
     override fun onClick(v: View) {
         if (SystemClock.elapsedRealtime() - lastClickTime < interval) {
             return

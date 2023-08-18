@@ -4,6 +4,19 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.softteco.template.domain.model.ApiEntry
 
+/**
+ * Data base entity
+ * @param id
+ * @param name
+ *@param auth
+ * @param category
+ * @param cors
+ * @param description
+ * @param https
+ * @param link
+ * @param logo
+ * @param favorite
+ */
 @Entity
 data class ApiEntryEntity(
     @PrimaryKey(autoGenerate = true)

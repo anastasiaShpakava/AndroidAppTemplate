@@ -9,6 +9,9 @@ import retrofit2.http.GET
  */
 interface PublicApi {
 
+    /**
+     * API entries
+     */
     @GET("/entries")
     suspend fun getAllEntries(): Response<ApiEntryApiModels>
 }

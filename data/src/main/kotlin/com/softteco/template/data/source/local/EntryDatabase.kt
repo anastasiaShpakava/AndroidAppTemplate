@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.softteco.template.data.Config
 import com.softteco.template.data.source.local.model.ApiEntryEntity
 
 /**
- * Database to CACHE data from a remote service.
+ * Data base creating
  */
 @Database(
     entities = [ApiEntryEntity::class],
@@ -16,14 +17,20 @@ import com.softteco.template.data.source.local.model.ApiEntryEntity
 )
 abstract class EntryDatabase : RoomDatabase() {
 
+    /**
+     * Provide ApiEntryDao
+     */
     abstract fun apiEntryDao(): ApiEntryDao
 
     companion object {
+        /**
+         * Method to create the database.
+         */
         fun create(applicationContext: Context): EntryDatabase {
             return Room.databaseBuilder(
                 applicationContext,
                 EntryDatabase::class.java,
-                "db"
+                Config.DB_NAME
             )
                 .fallbackToDestructiveMigration()
                 .build()

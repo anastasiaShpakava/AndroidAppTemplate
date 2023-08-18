@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.softteco.template.presentation.common.Constants
 import com.softteco.template.presentation.features.login.loginComponents.registration
 .PasswordValidationState
 import com.softteco.template.presentation.features.login.loginComponents.registration
@@ -34,7 +35,7 @@ class PasValidationViewModel(
             .mapLatest { validatePassword.execute(it) }
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
+                started = SharingStarted.WhileSubscribed(Constants.TIMEOUT_VALIDATION_PROCESS),
                 initialValue = PasswordValidationState()
             )
 

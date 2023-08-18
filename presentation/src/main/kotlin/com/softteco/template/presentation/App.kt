@@ -8,9 +8,15 @@ import coil.decode.SvgDecoder
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
+/**
+ * Base Activity
+ */
 @HiltAndroidApp
 class App : Application(), ImageLoaderFactory {
 
+    /**
+     * Calls when the activity is starting
+     */
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {

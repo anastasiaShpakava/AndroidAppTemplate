@@ -8,8 +8,10 @@ import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 
 /**
- * It can happen that [NavController.navigate] is called twice. The second call can potentially fail if the internal
- * representation of the nav graph already moved to the destination. Hence, we simply ignore the second call.
+ * It can happen that [NavController.navigate] is called twice. The second call can potentially fail
+ * if the internal
+ * representation of the nav graph already moved to the destination. Hence, we simply ignore the
+ * second call.
  */
 
 @Suppress("SwallowedException")
@@ -23,6 +25,9 @@ fun NavController.navigateSafe(directions: NavDirections) {
     }
 }
 
+/**
+ *
+ */
 @Suppress("SwallowedException")
 fun NavController.navigateSafe(directions: NavDirections, navOptions: NavOptions?) {
     try {
@@ -34,6 +39,9 @@ fun NavController.navigateSafe(directions: NavDirections, navOptions: NavOptions
     }
 }
 
+/**
+ *
+ */
 @Suppress("SwallowedException")
 fun NavController.navigateSafe(directions: NavDirections, extras: Navigator.Extras) {
     try {
@@ -45,6 +53,9 @@ fun NavController.navigateSafe(directions: NavDirections, extras: Navigator.Extr
     }
 }
 
+/**
+ *
+ */
 @Suppress("SwallowedException")
 fun NavController.navigateSafe(id: Int) {
     try {
@@ -56,6 +67,9 @@ fun NavController.navigateSafe(id: Int) {
     }
 }
 
+/**
+ *
+ */
 fun Fragment.popOrFinish() {
     val navController = findNavController()
     if (!navController.popBackStack() || navController.currentDestination == null) {
@@ -63,6 +77,9 @@ fun Fragment.popOrFinish() {
     }
 }
 
+/**
+ *
+ */
 fun Fragment.popOrFinish(upto: Int, inclusive: Boolean = false) {
     val navController = findNavController()
     if (!navController.popBackStack(upto, inclusive) || navController.currentDestination == null) {

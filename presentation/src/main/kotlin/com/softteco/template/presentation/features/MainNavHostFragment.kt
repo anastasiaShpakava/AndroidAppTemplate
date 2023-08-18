@@ -9,6 +9,9 @@ import com.softteco.template.presentation.databinding.FragmentMainNavHostBinding
 import com.softteco.template.presentation.extensions.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Base fragment
+ */
 @AndroidEntryPoint
 class MainNavHostFragment : BaseFragment(R.layout.fragment_main_nav_host) {
 
@@ -17,7 +20,8 @@ class MainNavHostFragment : BaseFragment(R.layout.fragment_main_nav_host) {
 
     override fun subscribeUi() {
         this.navController =
-            (childFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment).navController
+            (childFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment)
+                .navController
         setupBottomBarWithNavigation()
         val graph = navController.navInflater.inflate(R.navigation.main_nav)
         navController.graph = graph

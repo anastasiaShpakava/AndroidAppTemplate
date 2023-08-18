@@ -37,6 +37,9 @@ import com.softteco.template.presentation.common.ContentCardCornerSize
 import com.softteco.template.presentation.common.navigateSafe
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Provide fragment of favourites
+ */
 @AndroidEntryPoint
 class FavoritesFragment : ComposeFragment() {
 
