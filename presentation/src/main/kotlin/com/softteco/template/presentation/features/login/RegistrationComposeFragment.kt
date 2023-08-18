@@ -10,8 +10,14 @@ import androidx.navigation.fragment.findNavController
 import com.softteco.template.presentation.features.login.loginComponents.registration.RegistrationScreen
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Fragment for registration screen
+ */
 @AndroidEntryPoint
 class RegistrationComposeFragment : Fragment() {
+    /**
+     * Return the View for the fragment's UI
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

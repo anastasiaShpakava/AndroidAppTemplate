@@ -8,6 +8,9 @@ import com.softteco.template.domain.model.user.ApiResponse
 import com.softteco.template.presentation.features.login.AuthViewModel
 import com.softteco.template.presentation.features.login.loginComponents.ProgressBar
 
+/**
+ * Login result handling
+ */
 @Composable
 fun LoginUserResult(
     viewModel: AuthViewModel = hiltViewModel()

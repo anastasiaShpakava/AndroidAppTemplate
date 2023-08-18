@@ -18,6 +18,9 @@ import androidx.compose.ui.res.stringResource
 import com.softteco.template.presentation.R
 import java.util.*
 
+/**
+ * Simple component for getting date
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FieldDatePicker(

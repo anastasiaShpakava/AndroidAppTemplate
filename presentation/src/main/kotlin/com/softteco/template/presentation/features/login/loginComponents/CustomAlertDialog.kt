@@ -13,6 +13,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.softteco.template.presentation.R
 
+/**
+ * Simple alert dialog component
+ */
 @Composable
 fun CustomAlertDialog(onGoToScreen: () -> Unit, message: String) {
     AlertDialog(

@@ -12,6 +12,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.softteco.template.presentation.R
 
+/**
+ * Simple field for input data
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SimpleField(

@@ -1,7 +1,13 @@
 package com.softteco.template.presentation.features.login.loginComponents.registration
 
+/**
+ * Password validation
+ */
 class ValidatePassword {
 
+    /**
+     * executing password validation
+     */
     fun execute(password: String): PasswordValidationState {
         val validateCapitalizedLetter = validateCapitalizedLetter(password)
         val validateMinimum = validateMinimum(password)

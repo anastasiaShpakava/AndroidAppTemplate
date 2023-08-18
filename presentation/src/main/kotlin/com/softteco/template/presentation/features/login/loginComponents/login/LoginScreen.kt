@@ -25,11 +25,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -47,6 +47,9 @@ import com.softteco.template.presentation.R
 import com.softteco.template.presentation.features.login.AuthViewModel
 import com.softteco.template.presentation.features.login.LoginComposeFragmentDirections
 
+/**
+ * Login screen implementation
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
@@ -55,27 +58,9 @@ fun LoginScreen(
 ) {
     var logIn by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+
     Column {
-        Box(modifier = Modifier.fillMaxSize()) {
-            ClickableText(
-                text = AnnotatedString(stringResource(id = R.string.sign_up)),
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(20.dp),
-                onClick = {
-                    onNavigateToRegistration(
-                        LoginComposeFragmentDirections
-                            .actionLoginComposeFragmentToRegistrationComposeFragment()
-                    )
-                },
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.Default,
-                    textDecoration = TextDecoration.Underline,
-                    color = Color.Blue
-                )
-            )
-        }
         Column(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.Center,
@@ -134,7 +119,7 @@ fun LoginScreen(
                             } else {
                                 Icons.Default.Visibility
                             },
-                            contentDescription = "visibility",
+                            contentDescription = context.getString(R.string.visibility),
                             tint = Color.Black
                         )
                     }
@@ -195,6 +180,25 @@ fun LoginScreen(
                     fontFamily = FontFamily.Default
                 )
             )
+            Spacer(modifier = Modifier.weight(1f))
+            ClickableText(
+                text = AnnotatedString(stringResource(id = R.string.sign_up)),
+                modifier = Modifier
+                    .padding(20.dp),
+                onClick = {
+                    onNavigateToRegistration(
+                        LoginComposeFragmentDirections
+                            .actionLoginComposeFragmentToRegistrationComposeFragment()
+                    )
+                },
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily.Default,
+                    textDecoration = TextDecoration.Underline,
+                    color = Color.Blue
+                )
+            )
+
         }
     }
 }

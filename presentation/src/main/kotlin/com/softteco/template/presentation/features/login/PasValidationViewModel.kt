@@ -6,19 +6,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.softteco.template.presentation.features.login.loginComponents.registration.PasswordValidationState
-import com.softteco.template.presentation.features.login.loginComponents.registration.ValidatePassword
+import com.softteco.template.presentation.features.login.loginComponents.registration
+.PasswordValidationState
+import com.softteco.template.presentation.features.login.loginComponents.registration
+.ValidatePassword
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 
+/**
+ * Implementation of viewModel for password validation
+ * @property password inputted password
+ */
 class PasValidationViewModel(
     private val validatePassword: ValidatePassword = ValidatePassword()
 ) : ViewModel() {
     var password by mutableStateOf("")
         private set
 
+    /**
+     * Error handling with invalid password
+     */
     @OptIn(ExperimentalCoroutinesApi::class)
     val passwordError =
         snapshotFlow { password }
@@ -29,6 +38,9 @@ class PasValidationViewModel(
                 initialValue = PasswordValidationState()
             )
 
+    /**
+     * Observation of the input characters
+     */
     fun changePassword(value: String) {
         password = value
     }

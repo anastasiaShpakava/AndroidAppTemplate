@@ -16,16 +16,23 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Implementation of viewModel for registration and log in
+ * @property loginApiResponse - result of login function
+ * @property registerApiResponse - result of registration function
+ */
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registrationUseCase: RegistrationUseCase
 ) : ViewModel() {
 
-    var loginApiResponse by mutableStateOf<LoginResponse>(ApiResponse.Success(false))
+    private var loginApiResponse by mutableStateOf<LoginResponse>(ApiResponse.Success(false))
+    private var registerApiResponse by mutableStateOf<RegisterResponse>(ApiResponse.Success(false))
 
-    var registerApiResponse by mutableStateOf<RegisterResponse>(ApiResponse.Success(false))
-
+    /**
+     * login handling function
+     */
     fun login(
         userAuth: LoginAuthDto
     ) = viewModelScope.launch {
@@ -34,6 +41,9 @@ class AuthViewModel @Inject constructor(
             loginUseCase.invoke(userAuth)
     }
 
+    /**
+     * registration handling function
+     */
     fun register(
         user: CreateUserDto
     ) {

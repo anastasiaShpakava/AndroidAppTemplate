@@ -2,7 +2,6 @@ package com.softteco.template.presentation.features.login.loginComponents.regist
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
-
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDirections
@@ -13,6 +12,9 @@ import com.softteco.template.presentation.features.login.RegistrationComposeFrag
 import com.softteco.template.presentation.features.login.loginComponents.CustomAlertDialog
 import com.softteco.template.presentation.features.login.loginComponents.ProgressBar
 
+/**
+ * Registration result handling
+ */
 @Composable
 fun RegistrationUserResult(
     viewModel: AuthViewModel = hiltViewModel(),

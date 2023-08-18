@@ -13,12 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import com.softteco.template.presentation.R
 
+/**
+ * Simple component for data input
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordFieldComponent(
@@ -26,6 +30,8 @@ fun PasswordFieldComponent(
     fieldNameErrorState: MutableState<Boolean>,
     passwordVisibility: MutableState<Boolean>
 ) {
+    val context = LocalContext.current
+
     OutlinedTextField(
         value = fieldName.value,
         onValueChange = {
@@ -49,7 +55,7 @@ fun PasswordFieldComponent(
                     } else {
                         Icons.Default.Visibility
                     },
-                    contentDescription = "visibility",
+                    contentDescription = context.getString(R.string.visibility),
                     tint = Color.Black
                 )
             }

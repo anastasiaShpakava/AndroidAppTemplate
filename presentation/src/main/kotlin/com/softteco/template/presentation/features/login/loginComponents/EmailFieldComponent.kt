@@ -8,11 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.softteco.template.presentation.R
 import com.softteco.template.presentation.common.Constants.EMAIL_PATTERN
 
+
+/**
+ * Simple field for email input and validation
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailFieldComponent(
@@ -20,6 +25,8 @@ fun EmailFieldComponent(
     fieldNameErrorState: MutableState<Boolean>,
     fieldNameStr: Int
 ) {
+    val context = LocalContext.current
+
     OutlinedTextField(
         value = fieldName.value,
         onValueChange = {
@@ -39,9 +46,9 @@ fun EmailFieldComponent(
     if (fieldNameErrorState.value) {
         Text(text = stringResource(id = R.string.required), color = Color.Red)
     } else if (fieldName.value.text.isNotEmpty() && !EMAIL_PATTERN.toRegex()
-        .matches(fieldName.value.text)
+            .matches(fieldName.value.text)
     ) {
-        Text(text = "Invalid email format", color = Color.Red)
+        Text(text = context.getString(R.string.email_error), color = Color.Red)
         fieldNameErrorState.value = true
     }
 }
