@@ -25,20 +25,21 @@ import kotlinx.coroutines.*
 import java.util.*
 
 @Composable
-fun RegistrationScreen(onNavigateToLogin: (NavDirections) -> Unit) {
+fun RegistrationScreen(onNavigateToLogin: (NavDirections) -> Unit, modifier: Modifier = Modifier) {
     Box(modifier = Modifier.fillMaxSize()) {
-        ScaffoldWithTopBar(onNavigateToLogin)
+        ScaffoldWithTopBar(onNavigateToLogin, modifier)
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldWithTopBar(onNavigateToLogin: (NavDirections) -> Unit) {
+fun ScaffoldWithTopBar(
+    onNavigateToLogin: (NavDirections) -> Unit, modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel(),
+    pasViewModel: PasValidationViewModel = hiltViewModel()
+) {
     var signUp by remember { mutableStateOf(false) }
-
-    val authViewModel: AuthViewModel = hiltViewModel()
-    val pasViewModel: PasValidationViewModel = hiltViewModel()
 
     val countryList = mutableListOf<String>()
     val context = LocalContext.current
@@ -54,8 +55,8 @@ fun ScaffoldWithTopBar(onNavigateToLogin: (NavDirections) -> Unit) {
         countryList.addAll(message.await())
     }
 
-    Scaffold(topBar = {
-        CustomTopAppBar(stringResource(id = R.string.sign_up), true)
+    Scaffold(modifier = modifier, topBar = {
+        CustomTopAppBar(stringResource(id = R.string.sign_up), true, modifier)
     }, content = {
         val coroutineScope = rememberCoroutineScope()
         coroutineScope.launch { setList() }
@@ -168,9 +169,9 @@ fun ScaffoldWithTopBar(onNavigateToLogin: (NavDirections) -> Unit) {
                         },
                     )
                     DropDownListComponent(
-                        requestToOpen = isOpen.value,
                         list = countryList,
                         openCloseOfDropDownList,
+                        requestToOpen = isOpen.value,
                         userSelectedString
                     )
                 }

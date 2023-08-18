@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun DropDownListComponent(
-    requestToOpen: Boolean = false,
     list: List<String>,
     request: (Boolean) -> Unit,
+    requestToOpen: Boolean = false,
     selectedString: (String) -> Unit
 ) {
     DropdownMenu(expanded = requestToOpen, onDismissRequest = { request(false) }) {

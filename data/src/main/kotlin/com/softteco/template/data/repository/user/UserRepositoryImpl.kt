@@ -1,7 +1,10 @@
 package com.softteco.template.data.repository.user
 
 import com.softteco.template.data.source.remote.UserApiService
-import com.softteco.template.domain.model.user.*
+import com.softteco.template.domain.model.user.ApiResponse
+import com.softteco.template.domain.model.user.CreateUserDto
+import com.softteco.template.domain.model.user.LoginAuthDto
+
 import com.softteco.template.domain.repository.user.LoginResponse
 import com.softteco.template.domain.repository.user.RegisterResponse
 import com.softteco.template.domain.repository.user.UserRepository

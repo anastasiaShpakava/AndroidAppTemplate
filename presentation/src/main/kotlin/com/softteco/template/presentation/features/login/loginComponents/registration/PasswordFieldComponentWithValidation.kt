@@ -32,46 +32,48 @@ fun PasswordFieldComponentWithValidation(
     val passwordError by viewModel.passwordError.collectAsState()
     val context = LocalContext.current
 
-    OutlinedTextField(
-        value = viewModel.password,
-        onValueChange = {
-            if (fieldNameErrorState.value) {
-                fieldNameErrorState.value = false
-            }
-            viewModel.changePassword(it)
-        },
-        modifier = Modifier.fillMaxWidth(),
-        label = {
-            Text(text = stringResource(id = R.string.password))
-        },
-        isError = fieldNameErrorState.value,
-        trailingIcon = {
-            IconButton(onClick = {
-                passwordVisibility.value = !passwordVisibility.value
-            }) {
-                Icon(
-                    imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                    contentDescription = "visibility",
-                    tint = Color.Black
-                )
-            }
-        },
-        visualTransformation = if (passwordVisibility.value) PasswordVisualTransformation() else VisualTransformation.None
-    )
-    if (fieldNameErrorState.value) {
-        Text(text = stringResource(id = R.string.required), color = Color.Red)
-    }
-    Spacer(modifier = Modifier.height(8.dp))
+    Column() {
+        OutlinedTextField(
+            value = viewModel.password,
+            onValueChange = {
+                if (fieldNameErrorState.value) {
+                    fieldNameErrorState.value = false
+                }
+                viewModel.changePassword(it)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            label = {
+                Text(text = stringResource(id = R.string.password))
+            },
+            isError = fieldNameErrorState.value,
+            trailingIcon = {
+                IconButton(onClick = {
+                    passwordVisibility.value = !passwordVisibility.value
+                }) {
+                    Icon(
+                        imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = "visibility",
+                        tint = Color.Black
+                    )
+                }
+            },
+            visualTransformation = if (passwordVisibility.value) PasswordVisualTransformation() else VisualTransformation.None
+        )
+        if (fieldNameErrorState.value) {
+            Text(text = stringResource(id = R.string.required), color = Color.Red)
+        }
+        Spacer(modifier = Modifier.height(8.dp))
 
-    Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
-        ConditionRow(
-            condition = context.getString(R.string.registration_password_condition1),
-            check = passwordError.hasMinimum
-        )
-        ConditionRow(
-            condition = context.getString(R.string.registration_password_condition1),
-            check = passwordError.hasCapitalizedLetter
-        )
+        Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+            ConditionRow(
+                condition = context.getString(R.string.registration_password_condition1),
+                check = passwordError.hasMinimum
+            )
+            ConditionRow(
+                condition = context.getString(R.string.registration_password_condition1),
+                check = passwordError.hasCapitalizedLetter
+            )
+        }
     }
 }
 
