@@ -53,6 +53,7 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
     }
+
     @Provides
     @Named("UserApi")
     fun provideRetrofitUser(okHttpClient: OkHttpClient): Retrofit {

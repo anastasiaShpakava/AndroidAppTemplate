@@ -46,5 +46,4 @@ abstract class UseCaseModule {
     @Binds
     @Singleton
     internal abstract fun bindRegistrationUseCase(useCaseImpl: RegistrationUseCaseImpl): RegistrationUseCase
-
 }

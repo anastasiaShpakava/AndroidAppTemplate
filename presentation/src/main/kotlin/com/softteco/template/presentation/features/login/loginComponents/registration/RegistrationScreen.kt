@@ -100,7 +100,6 @@ fun ScaffoldWithTopBar(onNavigateToLogin: (NavDirections) -> Unit) {
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.Center,
         ) {
-
             Spacer(Modifier.size(16.dp))
 
             SimpleField(
@@ -150,7 +149,6 @@ fun ScaffoldWithTopBar(onNavigateToLogin: (NavDirections) -> Unit) {
                 Text(text = msg, color = Color.Red)
             }
             Spacer(Modifier.size(16.dp))
-
 
             Box {
                 Column {
@@ -257,7 +255,8 @@ fun ScaffoldWithTopBar(onNavigateToLogin: (NavDirections) -> Unit) {
             )
             if (signUp) {
                 RegistrationUserResult(
-                    hiltViewModel(), onNavigateToLogin = onNavigateToLogin
+                    hiltViewModel(),
+                    onNavigateToLogin = onNavigateToLogin
                 )
             }
         }

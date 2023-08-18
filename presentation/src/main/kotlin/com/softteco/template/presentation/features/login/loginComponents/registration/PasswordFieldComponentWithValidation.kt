@@ -19,11 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-
-
 import com.softteco.template.presentation.R
 import com.softteco.template.presentation.features.login.PasValidationViewModel
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,10 +77,12 @@ fun PasswordFieldComponentWithValidation(
 
 @Composable
 fun ConditionRow(
-    condition: String, check: Boolean
+    condition: String,
+    check: Boolean
 ) {
     val color by animateColorAsState(
-        targetValue = if (check) Color.Green else Color.Red, label = "text color"
+        targetValue = if (check) Color.Green else Color.Red,
+        label = "text color"
     )
 
     val icon = if (check) {
@@ -94,11 +93,14 @@ fun ConditionRow(
 
     Row {
         Icon(
-            imageVector = icon, tint = color, contentDescription = "status icon"
+            imageVector = icon,
+            tint = color,
+            contentDescription = "status icon"
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = condition, color = color
+            text = condition,
+            color = color
         )
     }
 }

@@ -15,7 +15,6 @@ import com.softteco.template.presentation.R
 
 @Composable
 fun CustomAlertDialog(onGoToScreen: () -> Unit, message: String) {
-
     AlertDialog(
         onDismissRequest = {},
         confirmButton = {
@@ -28,7 +27,6 @@ fun CustomAlertDialog(onGoToScreen: () -> Unit, message: String) {
 
         text = {
             Text(text = message)
-
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -37,4 +35,3 @@ fun CustomAlertDialog(onGoToScreen: () -> Unit, message: String) {
         containerColor = Color.White
     )
 }
-

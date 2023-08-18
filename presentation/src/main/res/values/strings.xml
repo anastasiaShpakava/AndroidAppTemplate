@@ -34,6 +34,7 @@
     <string name="password_requirement_1">- at least 8 characters</string>
     <string name="password_requirement_2">- must contain uppercase and lowercase letters, as well as numbers</string>
     <string name="success">Success</string>
+    <string name="back">Back</string>
     <string name="registration_success">You are registered. Please, log in</string>
     <string name="registration_password_condition1">Minimum 6 characters</string>
     <string name="registration_password_condition2">Has capitalized letter</string>

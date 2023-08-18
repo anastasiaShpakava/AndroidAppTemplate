@@ -22,7 +22,6 @@ fun PasswordFieldComponent(
     fieldNameErrorState: MutableState<Boolean>,
     passwordVisibility: MutableState<Boolean>
 ) {
-
     OutlinedTextField(
         value = fieldName.value,
         onValueChange = {

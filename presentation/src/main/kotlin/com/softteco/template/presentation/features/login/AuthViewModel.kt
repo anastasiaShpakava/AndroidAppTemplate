@@ -10,7 +10,6 @@ import com.softteco.template.domain.repository.user.LoginResponse
 import com.softteco.template.domain.repository.user.RegisterResponse
 import com.softteco.template.domain.usecase.user.LoginUseCase
 import com.softteco.template.domain.usecase.user.RegistrationUseCase
-
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,4 +42,3 @@ class AuthViewModel @Inject constructor(
         }
     }
 }
-

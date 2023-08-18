@@ -39,7 +39,7 @@ fun EmailFieldComponent(
     if (fieldNameErrorState.value) {
         Text(text = stringResource(id = R.string.required), color = Color.Red)
     } else if (fieldName.value.text.isNotEmpty() && !EMAIL_PATTERN.toRegex()
-            .matches(fieldName.value.text)
+        .matches(fieldName.value.text)
     ) {
         Text(text = "Invalid email format", color = Color.Red)
         fieldNameErrorState.value = true

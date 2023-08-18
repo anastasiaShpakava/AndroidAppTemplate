@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-
 import com.softteco.template.presentation.features.login.loginComponents.registration.RegistrationScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegistrationComposeFragment : Fragment() {
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {

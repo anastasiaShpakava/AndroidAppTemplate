@@ -11,7 +11,8 @@ import javax.inject.Named
  * RemoteDataSource of Apis API service
  * @param publicApi the object of api service
  */
-class ApisRemoteDataSource @Inject constructor(@Named("PublicApi")
+class ApisRemoteDataSource @Inject constructor(
+    @Named("PublicApi")
     retrofit: Retrofit,
     private val publicApi: PublicApi
 ) : BaseRemoteDataSource(retrofit) {

@@ -23,7 +23,6 @@ fun FieldDatePicker(
     fieldNameErrorState: MutableState<Boolean>,
     fieldNameStr: Int
 ) {
-
     val mContext = LocalContext.current
 
     val mYear: Int
@@ -42,7 +41,10 @@ fun FieldDatePicker(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             resDate.value = "$mDayOfMonth.${mMonth + 1}.$mYear"
-        }, mYear, mMonth, mDay
+        },
+        mYear,
+        mMonth,
+        mDay
     )
     val source = remember {
         MutableInteractionSource()
@@ -69,8 +71,5 @@ fun FieldDatePicker(
     }
     if (source.collectIsPressedAsState().value) {
         mDatePickerDialog.show()
-
     }
 }
-
-

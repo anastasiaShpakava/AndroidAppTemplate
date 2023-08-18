@@ -28,7 +28,6 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         }
     }
 
-
     /**
      * Method to navigate Fragment to API list Screen.
      */
