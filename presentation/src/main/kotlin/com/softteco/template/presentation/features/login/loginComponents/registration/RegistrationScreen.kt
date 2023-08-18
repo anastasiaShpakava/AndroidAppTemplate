@@ -276,7 +276,8 @@ fun RegistrationScreen(
                 )
                 if (signUp) {
                     RegistrationUserResult(
-                        hiltViewModel(), onNavigateToLogin = onNavigateToLogin
+                        hiltViewModel(),
+                        onNavigateToLogin = onNavigateToLogin
                     )
                 }
             }

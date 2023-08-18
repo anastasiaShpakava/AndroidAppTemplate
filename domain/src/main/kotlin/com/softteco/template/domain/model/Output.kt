@@ -8,10 +8,7 @@ package com.softteco.template.domain.model
  * @property message response message
  */
 data class Output<out T>(
-    val status: Status,
-    val data: T?,
-    val error: ApiError?,
-    val message: String?
+    val status: Status, val data: T?, val error: ApiError?, val message: String?
 ) {
 
     /**
@@ -21,14 +18,19 @@ data class Output<out T>(
         /**
          * Success response
          */
+
         SUCCESS,
+
         /**
          * Error response
          */
+
         ERROR,
+
         /**
          * Response loading
          */
+
         LOADING
     }
 

@@ -11,5 +11,4 @@ interface GetAllApiEntriesUseCase {
      * UseCase Method to fetch the API entries list from Data Layer
      */
     operator fun invoke(): Flow<List<ApiEntry>>
-
 }

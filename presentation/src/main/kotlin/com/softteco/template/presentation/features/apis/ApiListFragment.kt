@@ -32,7 +32,8 @@ class ApiListFragment : BaseFragment(R.layout.fragment_api_list) {
         viewLifecycleOwner.launchWhileStarted {
             viewModel.apiList.collectLatest { apiList ->
                 binding.rvApiList.swapAdapter(
-                    getNewAdapter(apiList), false
+                    getNewAdapter(apiList),
+                    false
                 )
             }
         }
@@ -60,9 +61,11 @@ class ApiListFragment : BaseFragment(R.layout.fragment_api_list) {
 
     private fun getNewAdapter(apiList: List<ApiEntry>): ApiListAdapter {
         return ApiListAdapter(
-            apiList, onClick = { position ->
+            apiList,
+            onClick = { position ->
                 findNavController().navigateSafe(ApiListFragmentDirections.apisToDetails(apiList[position]))
-            }, onClickFavorite = viewModel::onToggleFavorite
+            },
+            onClickFavorite = viewModel::onToggleFavorite
         )
     }
 }

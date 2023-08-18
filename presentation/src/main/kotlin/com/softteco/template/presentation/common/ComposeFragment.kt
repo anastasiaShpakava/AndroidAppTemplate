@@ -27,7 +27,9 @@ abstract class ComposeFragment : Fragment() {
      */
     @OptIn(ExperimentalFoundationApi::class)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // disable the stretchy overscroll behavior on android S,
         // it causes major issues with nested scrolling
@@ -41,8 +43,11 @@ abstract class ComposeFragment : Fragment() {
                 AppTheme {
                     CompositionLocalProvider(LocalOverscrollConfiguration provides overscrollConfig) {
                         Box(
-                            modifier = if (applyStatusBarPadding) Modifier.statusBarsPadding()
-                            else Modifier
+                            modifier = if (applyStatusBarPadding) {
+                                Modifier.statusBarsPadding()
+                            } else {
+                                Modifier
+                            }
                         ) {
                             this@ComposeFragment.Content()
                         }

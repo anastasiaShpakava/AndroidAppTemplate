@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.softteco.template.presentation.common.Constants
 import com.softteco.template.presentation.features.login.loginComponents.registration
-.PasswordValidationState
+    .PasswordValidationState
 import com.softteco.template.presentation.features.login.loginComponents.registration
-.ValidatePassword
+    .ValidatePassword
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.mapLatest

@@ -8,6 +8,7 @@ import com.softteco.template.domain.model.user.LoginAuthDto
  * Response from login action declaration
  */
 typealias LoginResponse = ApiResponse<Boolean>
+
 /**
  * Response from registrationaction declaration
  */

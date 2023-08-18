@@ -126,8 +126,9 @@ internal fun Toolbar(
         navigationIcon = {
             IconButton(onClick = onBackPressed) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack, contentDescription = stringResource
-                        (R.string.back_btn_description)
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = stringResource
+                    (R.string.back_btn_description)
                 )
             }
         },
