@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.softteco.template.domain.model.user.ApiResponse
 import com.softteco.template.domain.model.user.CreateUserDto
 import com.softteco.template.domain.model.user.LoginAuthDto
-
 import com.softteco.template.domain.repository.user.LoginResponse
 import com.softteco.template.domain.repository.user.RegisterResponse
 import com.softteco.template.domain.usecase.user.LoginUseCase

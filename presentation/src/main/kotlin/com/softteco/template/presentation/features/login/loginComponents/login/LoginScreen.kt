@@ -1,6 +1,5 @@
 package com.softteco.template.presentation.features.login.loginComponents.login
 
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -22,8 +20,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -51,7 +53,6 @@ fun LoginScreen(
     onNavigateToRegistration: (NavDirections) -> Unit,
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
-
     var logIn by remember { mutableStateOf(false) }
 
     Column {
@@ -128,15 +129,21 @@ fun LoginScreen(
                         passwordVisibility.value = !passwordVisibility.value
                     }) {
                         Icon(
-                            imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff
-                            else Icons.Default.Visibility,
+                            imageVector = if (passwordVisibility.value) {
+                                Icons.Default.VisibilityOff
+                            } else {
+                                Icons.Default.Visibility
+                            },
                             contentDescription = "visibility",
                             tint = Color.Black
                         )
                     }
                 },
-                visualTransformation = if (passwordVisibility.value) PasswordVisualTransformation()
-                else VisualTransformation.None
+                visualTransformation = if (passwordVisibility.value) {
+                    PasswordVisualTransformation()
+                } else {
+                    VisualTransformation.None
+                }
             )
             if (passwordErrorState.value) {
                 Text(text = stringResource(id = R.string.required), color = Color.Red)
@@ -190,5 +197,4 @@ fun LoginScreen(
             )
         }
     }
-
 }

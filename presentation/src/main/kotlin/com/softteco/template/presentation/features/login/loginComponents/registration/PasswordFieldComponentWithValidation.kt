@@ -1,5 +1,6 @@
 package com.softteco.template.presentation.features.login.loginComponents.registration
 
+import android.content.Context
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -38,12 +38,12 @@ import com.softteco.template.presentation.features.login.PasValidationViewModel
 fun PasswordFieldComponentWithValidation(
     viewModel: PasValidationViewModel,
     fieldNameErrorState: MutableState<Boolean>,
-    passwordVisibility: MutableState<Boolean>
+    passwordVisibility: MutableState<Boolean>,
+    context: Context = LocalContext.current
 ) {
     val passwordError by viewModel.passwordError.collectAsState()
-    val context = LocalContext.current
 
-    Column{
+    Column {
         OutlinedTextField(
             value = viewModel.password,
             onValueChange = {
@@ -62,15 +62,21 @@ fun PasswordFieldComponentWithValidation(
                     passwordVisibility.value = !passwordVisibility.value
                 }) {
                     Icon(
-                        imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff
-                        else Icons.Default.Visibility,
+                        imageVector = if (passwordVisibility.value) {
+                            Icons.Default.VisibilityOff
+                        } else {
+                            Icons.Default.Visibility
+                        },
                         contentDescription = "visibility",
                         tint = Color.Black
                     )
                 }
             },
-            visualTransformation = if (passwordVisibility.value) PasswordVisualTransformation()
-            else VisualTransformation.None
+            visualTransformation = if (passwordVisibility.value) {
+                PasswordVisualTransformation()
+            } else {
+                VisualTransformation.None
+            }
         )
         if (fieldNameErrorState.value) {
             Text(text = stringResource(id = R.string.required), color = Color.Red)

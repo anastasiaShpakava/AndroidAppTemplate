@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -28,7 +27,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -46,19 +44,22 @@ import com.softteco.template.presentation.features.login.loginComponents.DropDow
 import com.softteco.template.presentation.features.login.loginComponents.EmailFieldComponent
 import com.softteco.template.presentation.features.login.loginComponents.FieldDatePicker
 import com.softteco.template.presentation.features.login.loginComponents.SimpleField
-
 import com.softteco.template.presentation.features.login.loginComponents.login.PasswordFieldComponent
-
-import java.util.*
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
-fun RegistrationScreen(onNavigateToLogin: (NavDirections) -> Unit, modifier: Modifier = Modifier) {
+fun RegistrationScreen(
+    onNavigateToLogin: (NavDirections) -> Unit,
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel(),
+    pasViewModel: PasValidationViewModel = hiltViewModel()
+) {
     Box(modifier = Modifier.fillMaxSize()) {
-        ScaffoldWithTopBar(onNavigateToLogin, modifier)
+        ScaffoldWithTopBar(onNavigateToLogin, modifier, authViewModel, pasViewModel)
     }
 }
 
@@ -66,7 +67,8 @@ fun RegistrationScreen(onNavigateToLogin: (NavDirections) -> Unit, modifier: Mod
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldWithTopBar(
-    onNavigateToLogin: (NavDirections) -> Unit, modifier: Modifier = Modifier,
+    onNavigateToLogin: (NavDirections) -> Unit,
+    modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = hiltViewModel(),
     pasViewModel: PasValidationViewModel = hiltViewModel()
 ) {
@@ -120,9 +122,6 @@ fun ScaffoldWithTopBar(
         }
         val userSelectedString: (String) -> Unit = {
             country.value = it
-        }
-        var selectedImageUri by remember {
-            mutableStateOf<Uri?>(null)
         }
 
         Column(
@@ -287,8 +286,7 @@ fun ScaffoldWithTopBar(
             )
             if (signUp) {
                 RegistrationUserResult(
-                    hiltViewModel(),
-                    onNavigateToLogin = onNavigateToLogin
+                    hiltViewModel(), onNavigateToLogin = onNavigateToLogin
                 )
             }
         }

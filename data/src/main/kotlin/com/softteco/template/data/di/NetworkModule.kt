@@ -6,7 +6,6 @@ import com.softteco.template.data.repository.user.UserRepositoryImpl
 import com.softteco.template.data.source.remote.PublicApi
 import com.softteco.template.data.source.remote.UserApiService
 import com.softteco.template.domain.repository.user.UserRepository
-
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

@@ -4,7 +4,6 @@ import com.softteco.template.domain.model.user.ApiResponse
 import com.softteco.template.domain.model.user.CreateUserDto
 import com.softteco.template.domain.model.user.LoginAuthDto
 
-
 typealias LoginResponse = ApiResponse<Boolean>
 typealias RegisterResponse = ApiResponse<Boolean>
 
