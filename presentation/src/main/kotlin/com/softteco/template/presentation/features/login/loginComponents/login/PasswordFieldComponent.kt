@@ -4,7 +4,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -40,13 +45,15 @@ fun PasswordFieldComponent(
                 passwordVisibility.value = !passwordVisibility.value
             }) {
                 Icon(
-                    imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                    imageVector = if (passwordVisibility.value) Icons.Default.VisibilityOff
+                    else Icons.Default.Visibility,
                     contentDescription = "visibility",
                     tint = Color.Black
                 )
             }
         },
-        visualTransformation = if (passwordVisibility.value) PasswordVisualTransformation() else VisualTransformation.None
+        visualTransformation = if (passwordVisibility.value) PasswordVisualTransformation()
+        else VisualTransformation.None
     )
     if (fieldNameErrorState.value) {
         Text(text = stringResource(id = R.string.required), color = Color.Red)
