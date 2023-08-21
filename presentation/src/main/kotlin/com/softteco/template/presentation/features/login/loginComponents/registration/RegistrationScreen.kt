@@ -58,48 +58,47 @@ fun RegistrationScreen(
     authViewModel: AuthViewModel = hiltViewModel(),
     pasViewModel: PasValidationViewModel = hiltViewModel()
 ) {
+    var signUp by remember { mutableStateOf(false) }
+
+    val countryList = mutableListOf<String>()
+    val context = LocalContext.current
+
+    fun getCountriesList(): List<String> {
+        return context.assets.open("listCountries.txt").bufferedReader().use {
+            it.readLines()
+        }
+    }
+
+    suspend fun setList() = coroutineScope {
+        val message: Deferred<List<String>> = async { getCountriesList() }
+        countryList.addAll(message.await())
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+    coroutineScope.launch { setList() }
+    val firstName = remember {
+        mutableStateOf(TextFieldValue())
+    }
+
+    val lastName = remember {
+        mutableStateOf(TextFieldValue())
+    }
+    val email = remember { mutableStateOf(TextFieldValue()) }
+
+    val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
+    val country = remember { mutableStateOf("") }
+    val birthDay = remember { mutableStateOf("") }
+
+    val firstNameErrorState = remember { mutableStateOf(false) }
+    val lastNameErrorState = remember { mutableStateOf(false) }
+    val emailErrorState = remember { mutableStateOf(false) }
+    val passwordErrorState = remember { mutableStateOf(false) }
+    val confirmPasswordErrorState = remember { mutableStateOf(false) }
+    val countryErrorState = remember { mutableStateOf(false) }
+    val birthDayErrorState = remember { mutableStateOf(false) }
+
+    val scrollState = rememberScrollState()
     Box(modifier = modifier) {
-        var signUp by remember { mutableStateOf(false) }
-
-        val countryList = mutableListOf<String>()
-        val context = LocalContext.current
-
-        fun getCountriesList(): List<String> {
-            return context.assets.open("listCountries.txt").bufferedReader().use {
-                it.readLines()
-            }
-        }
-
-        suspend fun setList() = coroutineScope {
-            val message: Deferred<List<String>> = async { getCountriesList() }
-            countryList.addAll(message.await())
-        }
-
-        val coroutineScope = rememberCoroutineScope()
-        coroutineScope.launch { setList() }
-        val firstName = remember {
-            mutableStateOf(TextFieldValue())
-        }
-
-        val lastName = remember {
-            mutableStateOf(TextFieldValue())
-        }
-        val email = remember { mutableStateOf(TextFieldValue()) }
-
-        val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
-        val country = remember { mutableStateOf("") }
-        val birthDay = remember { mutableStateOf("") }
-
-        val firstNameErrorState = remember { mutableStateOf(false) }
-        val lastNameErrorState = remember { mutableStateOf(false) }
-        val emailErrorState = remember { mutableStateOf(false) }
-        val passwordErrorState = remember { mutableStateOf(false) }
-        val confirmPasswordErrorState = remember { mutableStateOf(false) }
-        val countryErrorState = remember { mutableStateOf(false) }
-        val birthDayErrorState = remember { mutableStateOf(false) }
-
-        val scrollState = rememberScrollState()
-
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
             CustomTopAppBar(
                 stringResource(id = R.string.sign_up),
