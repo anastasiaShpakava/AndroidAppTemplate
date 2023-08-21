@@ -29,5 +29,6 @@ class LocalDatabaseModule {
      * Provide API for entry
      */
     @Provides
-    fun provideApiEntryDao(entryDatabase: EntryDatabase): ApiEntryDao = entryDatabase.apiEntryDao()
+    fun provideApiEntryDao(entryDatabase: EntryDatabase): ApiEntryDao =
+        entryDatabase.apiEntryDao()
 }

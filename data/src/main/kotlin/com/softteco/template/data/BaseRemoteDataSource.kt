@@ -32,7 +32,10 @@ abstract class BaseRemoteDataSource constructor(
                 return Output.success(result.body())
             } else {
                 val errorResponse = parseError(result)
-                Output.error(errorResponse?.statusMessage ?: defaultErrorMessage, errorResponse)
+                Output.error(
+                    errorResponse?.statusMessage ?: defaultErrorMessage,
+                    errorResponse
+                )
             }
         } catch (e: Throwable) {
             Output.error("Unknown Error", null)
@@ -47,7 +50,10 @@ abstract class BaseRemoteDataSource constructor(
     @Suppress("SwallowedException")
     private fun parseError(response: Response<*>): ApiError? {
         val converter =
-            retrofit.responseBodyConverter<ApiError>(ApiError::class.java, arrayOfNulls(0))
+            retrofit.responseBodyConverter<ApiError>(
+                ApiError::class.java,
+                arrayOfNulls(0)
+            )
         return try {
             response.errorBody()?.let {
                 converter.convert(it)

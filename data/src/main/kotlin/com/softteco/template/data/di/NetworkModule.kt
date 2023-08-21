@@ -55,8 +55,10 @@ object NetworkModule {
         val moshi = Moshi.Builder().build()
         val converterFactory: Converter.Factory = MoshiConverterFactory.create(moshi)
 
-        return Retrofit.Builder().baseUrl(Config.BASE_URL).addConverterFactory(converterFactory)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory()).client(okHttpClient).build()
+        return Retrofit.Builder().baseUrl(Config.BASE_URL)
+            .addConverterFactory(converterFactory)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory()).client(okHttpClient)
+            .build()
     }
 
     /**
@@ -68,8 +70,10 @@ object NetworkModule {
         val moshi = Moshi.Builder().build()
         val converterFactory: Converter.Factory = MoshiConverterFactory.create(moshi)
 
-        return Retrofit.Builder().baseUrl(Config.USER_URL).addConverterFactory(converterFactory)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory()).client(okHttpClient).build()
+        return Retrofit.Builder().baseUrl(Config.USER_URL)
+            .addConverterFactory(converterFactory)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory()).client(okHttpClient)
+            .build()
     }
 
     /**

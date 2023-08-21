@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -38,6 +36,7 @@ import com.softteco.template.presentation.features.login.PasValidationViewModel
 import com.softteco.template.presentation.features.login.loginComponents.CustomTopAppBar
 import com.softteco.template.presentation.features.login.loginComponents.EmailFieldComponent
 import com.softteco.template.presentation.features.login.loginComponents.FieldDatePicker
+import com.softteco.template.presentation.features.login.loginComponents.SimpleButtonComponent
 import com.softteco.template.presentation.features.login.loginComponents.SimpleField
 import com.softteco.template.presentation.features.login.loginComponents.TextFieldWithDropDownComponent
 import com.softteco.template.presentation.features.login.loginComponents.login.PasswordFieldComponent
@@ -50,7 +49,7 @@ import java.util.*
 /**
  * Registration screen implementation
  */
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationScreen(
@@ -76,183 +75,178 @@ fun RegistrationScreen(
             countryList.addAll(message.await())
         }
 
+        val coroutineScope = rememberCoroutineScope()
+        coroutineScope.launch { setList() }
+        val firstName = remember {
+            mutableStateOf(TextFieldValue())
+        }
+
+        val lastName = remember {
+            mutableStateOf(TextFieldValue())
+        }
+        val email = remember { mutableStateOf(TextFieldValue()) }
+
+        val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
+        val country = remember { mutableStateOf("") }
+        val birthDay = remember { mutableStateOf("") }
+
+        val firstNameErrorState = remember { mutableStateOf(false) }
+        val lastNameErrorState = remember { mutableStateOf(false) }
+        val emailErrorState = remember { mutableStateOf(false) }
+        val passwordErrorState = remember { mutableStateOf(false) }
+        val confirmPasswordErrorState = remember { mutableStateOf(false) }
+        val countryErrorState = remember { mutableStateOf(false) }
+        val birthDayErrorState = remember { mutableStateOf(false) }
+
+        val scrollState = rememberScrollState()
+
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
             CustomTopAppBar(
                 stringResource(id = R.string.sign_up),
                 true,
                 modifier = Modifier.fillMaxWidth()
             )
-        }, content = {
-                val coroutineScope = rememberCoroutineScope()
-                coroutineScope.launch { setList() }
-                val firstName = remember {
-                    mutableStateOf(TextFieldValue())
+        }) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp, 100.dp)
+                    .verticalScroll(scrollState),
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Spacer(Modifier.size(16.dp))
+
+                SimpleField(
+                    fieldName = firstName,
+                    fieldNameErrorState = firstNameErrorState,
+                    fieldNameStr = R.string.first_name,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.size(16.dp))
+
+                SimpleField(
+                    fieldName = lastName,
+                    fieldNameErrorState = lastNameErrorState,
+                    fieldNameStr = R.string.last_name,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.size(16.dp))
+
+                EmailFieldComponent(
+                    fieldName = email,
+                    fieldNameErrorState = emailErrorState,
+                    fieldNameStr = R.string.email,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.size(16.dp))
+                val passwordVisibility = remember { mutableStateOf(true) }
+
+                PasswordFieldComponentWithValidation(
+                    pasViewModel,
+                    fieldNameErrorState = passwordErrorState,
+                    passwordVisibility = passwordVisibility,
+                    Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.size(16.dp))
+                val cPasswordVisibility = remember { mutableStateOf(true) }
+
+                PasswordFieldComponent(
+                    fieldName = confirmPassword,
+                    fieldNameErrorState = confirmPasswordErrorState,
+                    passwordVisibility = cPasswordVisibility,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                if (confirmPasswordErrorState.value) {
+                    val msg = if (confirmPassword.value.text.isEmpty()) {
+                        stringResource(id = R.string.required)
+                    } else if (confirmPassword.value.text != pasViewModel.password) {
+                        stringResource(id = R.string.password_not_matching)
+                    } else {
+                        ""
+                    }
+                    Text(text = msg, color = Color.Red)
+                }
+                Spacer(Modifier.size(16.dp))
+                TextFieldWithDropDownComponent(
+                    country = country,
+                    countryErrorState = countryErrorState,
+                    countryList = countryList,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                if (countryErrorState.value) {
+                    Text(text = stringResource(id = R.string.required), color = Color.Red)
                 }
 
-                val lastName = remember {
-                    mutableStateOf(TextFieldValue())
-                }
-                val email = remember { mutableStateOf(TextFieldValue()) }
+                Spacer(Modifier.size(16.dp))
 
-                val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
-                val country = remember { mutableStateOf("") }
-                val birthDay = remember { mutableStateOf("") }
-
-                val firstNameErrorState = remember { mutableStateOf(false) }
-                val lastNameErrorState = remember { mutableStateOf(false) }
-                val emailErrorState = remember { mutableStateOf(false) }
-                val passwordErrorState = remember { mutableStateOf(false) }
-                val confirmPasswordErrorState = remember { mutableStateOf(false) }
-                val countryErrorState = remember { mutableStateOf(false) }
-                val birthDayErrorState = remember { mutableStateOf(false) }
-
-                val scrollState = rememberScrollState()
-
-                Column(
+                FieldDatePicker(
+                    birthDay,
+                    fieldNameErrorState = birthDayErrorState,
+                    fieldNameStr = R.string.birth_day,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.size(16.dp))
+                SimpleButtonComponent(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp, 100.dp)
-                        .verticalScroll(scrollState),
-                    verticalArrangement = Arrangement.Center,
+                        .fillMaxWidth()
+                        .height(50.dp)
                 ) {
-                    Spacer(Modifier.size(16.dp))
-
-                    SimpleField(
-                        fieldName = firstName,
-                        fieldNameErrorState = firstNameErrorState,
-                        fieldNameStr = R.string.first_name,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(Modifier.size(16.dp))
-
-                    SimpleField(
-                        fieldName = lastName,
-                        fieldNameErrorState = lastNameErrorState,
-                        fieldNameStr = R.string.last_name,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(Modifier.size(16.dp))
-
-                    EmailFieldComponent(
-                        fieldName = email,
-                        fieldNameErrorState = emailErrorState,
-                        fieldNameStr = R.string.email,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(Modifier.size(16.dp))
-                    val passwordVisibility = remember { mutableStateOf(true) }
-
-                    PasswordFieldComponentWithValidation(
-                        pasViewModel,
-                        fieldNameErrorState = passwordErrorState,
-                        passwordVisibility = passwordVisibility,
-                        Modifier.fillMaxWidth()
-                    )
-                    Spacer(Modifier.size(16.dp))
-                    val cPasswordVisibility = remember { mutableStateOf(true) }
-
-                    PasswordFieldComponent(
-                        fieldName = confirmPassword,
-                        fieldNameErrorState = confirmPasswordErrorState,
-                        passwordVisibility = cPasswordVisibility,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    if (confirmPasswordErrorState.value) {
-                        val msg = if (confirmPassword.value.text.isEmpty()) {
-                            stringResource(id = R.string.required)
-                        } else if (confirmPassword.value.text != pasViewModel.password) {
-                            stringResource(id = R.string.password_not_matching)
-                        } else {
-                            ""
+                    when {
+                        firstName.value.text.isEmpty() -> {
+                            firstNameErrorState.value = true
                         }
-                        Text(text = msg, color = Color.Red)
-                    }
-                    Spacer(Modifier.size(16.dp))
-                    TextFieldWithDropDownComponent(
-                        country = country,
-                        countryErrorState = countryErrorState,
-                        countryList = countryList,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    if (countryErrorState.value) {
-                        Text(text = stringResource(id = R.string.required), color = Color.Red)
-                    }
-
-                    Spacer(Modifier.size(16.dp))
-
-                    FieldDatePicker(
-                        birthDay,
-                        fieldNameErrorState = birthDayErrorState,
-                        fieldNameStr = R.string.birth_day,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(Modifier.size(16.dp))
-                    Button(
-                        shape = RoundedCornerShape(50.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp),
-                        onClick = {
-                            when {
-                                firstName.value.text.isEmpty() -> {
-                                    firstNameErrorState.value = true
-                                }
-                                lastName.value.text.isEmpty() -> {
-                                    lastNameErrorState.value = true
-                                }
-                                email.value.text.isEmpty() -> {
-                                    emailErrorState.value = true
-                                }
-                                pasViewModel.password.isEmpty() -> {
-                                    passwordErrorState.value = true
-                                }
-                                confirmPassword.value.text.isEmpty() -> {
-                                    confirmPasswordErrorState.value = true
-                                }
-                                confirmPassword.value.text != pasViewModel.password -> {
-                                    confirmPasswordErrorState.value = true
-                                }
-                                country.value.isEmpty() -> {
-                                    countryErrorState.value = true
-                                }
-                                birthDay.value.isEmpty() -> {
-                                    birthDayErrorState.value = true
-                                }
-                                else -> {
-                                    signUp = true
-                                    firstNameErrorState.value = false
-                                    lastNameErrorState.value = false
-                                    emailErrorState.value = false
-                                    passwordErrorState.value = false
-                                    confirmPasswordErrorState.value = false
-                                    countryErrorState.value = false
-                                    birthDayErrorState.value = false
-                                    authViewModel.register(
-                                        CreateUserDto(
-                                            firstName.value.text,
-                                            lastName.value.text,
-                                            email.value.text,
-                                            pasViewModel.password,
-                                            confirmPassword.value.text,
-                                            country.value,
-                                            birthDay.value
-                                        )
-                                    )
-                                }
-                            }
-                        },
-                        content = {
-                            Text(text = stringResource(id = R.string.sign_up), color = Color.White)
-                        },
-                    )
-                    if (signUp) {
-                        RegistrationUserResult(
-                            hiltViewModel(),
-                            onNavigateToLogin = onNavigateToLogin
-                        )
+                        lastName.value.text.isEmpty() -> {
+                            lastNameErrorState.value = true
+                        }
+                        email.value.text.isEmpty() -> {
+                            emailErrorState.value = true
+                        }
+                        pasViewModel.password.isEmpty() -> {
+                            passwordErrorState.value = true
+                        }
+                        confirmPassword.value.text.isEmpty() -> {
+                            confirmPasswordErrorState.value = true
+                        }
+                        confirmPassword.value.text != pasViewModel.password -> {
+                            confirmPasswordErrorState.value = true
+                        }
+                        country.value.isEmpty() -> {
+                            countryErrorState.value = true
+                        }
+                        birthDay.value.isEmpty() -> {
+                            birthDayErrorState.value = true
+                        }
+                        else -> {
+                            signUp = true
+                            firstNameErrorState.value = false
+                            lastNameErrorState.value = false
+                            emailErrorState.value = false
+                            passwordErrorState.value = false
+                            confirmPasswordErrorState.value = false
+                            countryErrorState.value = false
+                            birthDayErrorState.value = false
+                            authViewModel.register(
+                                CreateUserDto(
+                                    firstName.value.text,
+                                    lastName.value.text,
+                                    email.value.text,
+                                    pasViewModel.password,
+                                    confirmPassword.value.text,
+                                    country.value,
+                                    birthDay.value
+                                )
+                            )
+                        }
                     }
                 }
-            })
+                if (signUp) {
+                    RegistrationUserResult(
+                        hiltViewModel(),
+                        onNavigateToLogin = onNavigateToLogin
+                    )
+                }
+            }
+        }
     }
 }
