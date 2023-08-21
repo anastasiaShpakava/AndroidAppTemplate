@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -39,37 +39,45 @@ import com.softteco.template.presentation.features.login.PasValidationViewModel
 fun PasswordFieldComponentWithValidation(
     viewModel: PasValidationViewModel,
     fieldNameErrorState: MutableState<Boolean>,
-    passwordVisibility: MutableState<Boolean>
+    passwordVisibility: MutableState<Boolean>,
+    modifier: Modifier = Modifier
 ) {
     val passwordError by viewModel.passwordError.collectAsState()
 
     Column {
-        OutlinedTextField(value = viewModel.password, onValueChange = {
-            if (fieldNameErrorState.value) {
-                fieldNameErrorState.value = false
+        OutlinedTextField(
+            value = viewModel.password,
+            onValueChange = {
+                if (fieldNameErrorState.value) {
+                    fieldNameErrorState.value = false
+                }
+                viewModel.changePassword(it)
+            },
+            modifier = modifier,
+            label = {
+                Text(text = stringResource(id = R.string.password))
+            },
+            isError = fieldNameErrorState.value,
+            trailingIcon = {
+                IconButton(onClick = {
+                    passwordVisibility.value = !passwordVisibility.value
+                }) {
+                    Icon(
+                        imageVector = if (passwordVisibility.value) {
+                            Icons.Default.VisibilityOff
+                        } else {
+                            Icons.Default.Visibility
+                        },
+                        contentDescription = stringResource(R.string.visibility),
+                        tint = Color.Black
+                    )
+                }
+            },
+            visualTransformation = if (passwordVisibility.value) {
+                PasswordVisualTransformation()
+            } else {
+                VisualTransformation.None
             }
-            viewModel.changePassword(it)
-        }, modifier = Modifier.fillMaxWidth(), label = {
-            Text(text = stringResource(id = R.string.password))
-        }, isError = fieldNameErrorState.value, trailingIcon = {
-            IconButton(onClick = {
-                passwordVisibility.value = !passwordVisibility.value
-            }) {
-                Icon(
-                    imageVector = if (passwordVisibility.value) {
-                        Icons.Default.VisibilityOff
-                    } else {
-                        Icons.Default.Visibility
-                    },
-                    contentDescription = stringResource(R.string.visibility),
-                    tint = Color.Black
-                )
-            }
-        }, visualTransformation = if (passwordVisibility.value) {
-            PasswordVisualTransformation()
-        } else {
-            VisualTransformation.None
-        }
         )
         if (fieldNameErrorState.value) {
             Text(text = stringResource(id = R.string.required), color = Color.Red)
@@ -79,11 +87,13 @@ fun PasswordFieldComponentWithValidation(
         Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             ConditionRow(
                 condition = stringResource(R.string.registration_password_condition1),
-                check = passwordError.hasMinimum
+                check = passwordError.hasMinimum,
+                modifier = Modifier.fillMaxSize()
             )
             ConditionRow(
                 condition = stringResource(R.string.registration_password_condition1),
-                check = passwordError.hasCapitalizedLetter
+                check = passwordError.hasCapitalizedLetter,
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
@@ -94,7 +104,9 @@ fun PasswordFieldComponentWithValidation(
  */
 @Composable
 fun ConditionRow(
-    condition: String, check: Boolean
+    condition: String,
+    check: Boolean,
+    modifier: Modifier = Modifier
 ) {
     val color by animateColorAsState(
         targetValue = if (check) Color.Green else Color.Red
@@ -106,7 +118,7 @@ fun ConditionRow(
         Icons.Rounded.Close
     }
 
-    Row {
+    Row(modifier = modifier) {
         Icon(
             imageVector = icon,
             tint = color,
@@ -114,7 +126,8 @@ fun ConditionRow(
         )
         Spacer(modifier = Modifier.width(10.dp))
         Text(
-            text = condition, color = color
+            text = condition,
+            color = color
         )
     }
 }

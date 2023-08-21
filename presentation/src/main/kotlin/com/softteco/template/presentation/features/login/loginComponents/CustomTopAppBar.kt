@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.softteco.template.presentation.R
@@ -21,10 +22,12 @@ import com.softteco.template.presentation.R
 @Composable
 fun CustomTopAppBar(
     title: String,
-    showBackIcon: Boolean
+    showBackIcon: Boolean,
+    modifier: Modifier = Modifier
 ) {
     val dispatcher = (LocalOnBackPressedDispatcherOwner.current ?: return).onBackPressedDispatcher
     TopAppBar(
+        modifier = modifier,
         title = {
             Text(text = title)
         },

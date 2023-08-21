@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -26,7 +25,8 @@ import java.util.*
 fun FieldDatePicker(
     resDate: MutableState<String>,
     fieldNameErrorState: MutableState<Boolean>,
-    fieldNameStr: Int
+    fieldNameStr: Int,
+    modifier: Modifier = Modifier
 ) {
     val mContext = LocalContext.current
 
@@ -64,7 +64,7 @@ fun FieldDatePicker(
             resDate.value = it
         },
         readOnly = true,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         isError = fieldNameErrorState.value,
         label = {
             Text(text = stringResource(id = fieldNameStr))

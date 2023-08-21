@@ -1,6 +1,5 @@
 package com.softteco.template.presentation.features.login.loginComponents
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -21,7 +20,8 @@ import com.softteco.template.presentation.common.Constants.EMAIL_PATTERN
 fun EmailFieldComponent(
     fieldName: MutableState<TextFieldValue>,
     fieldNameErrorState: MutableState<Boolean>,
-    fieldNameStr: Int
+    fieldNameStr: Int,
+    modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
         value = fieldName.value,
@@ -32,7 +32,7 @@ fun EmailFieldComponent(
             fieldName.value = it
         },
 
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         isError = fieldNameErrorState.value,
         label = {
             Text(text = stringResource(id = fieldNameStr))

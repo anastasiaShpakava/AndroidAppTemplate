@@ -1,4 +1,4 @@
-package com.softteco.template.presentation.features.login.loginComponents.login
+package com.softteco.template.presentation.features.login.loginComponents
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -19,29 +19,29 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.softteco.template.presentation.R
 
 /**
- * Simple component for data input
+ * Provide component with password
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordFieldComponent(
-    fieldName: MutableState<TextFieldValue>,
-    fieldNameErrorState: MutableState<Boolean>,
+fun SimplePasswordField(
+    password: MutableState<TextFieldValue>,
+    passwordErrorState: MutableState<Boolean>,
     passwordVisibility: MutableState<Boolean>,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
-        value = fieldName.value,
+        value = password.value,
         onValueChange = {
-            if (fieldNameErrorState.value) {
-                fieldNameErrorState.value = false
+            if (passwordErrorState.value) {
+                passwordErrorState.value = false
             }
-            fieldName.value = it
+            password.value = it
         },
+        isError = passwordErrorState.value,
         modifier = modifier,
         label = {
             Text(text = stringResource(id = R.string.password))
         },
-        isError = fieldNameErrorState.value,
         trailingIcon = {
             IconButton(onClick = {
                 passwordVisibility.value = !passwordVisibility.value
@@ -63,7 +63,4 @@ fun PasswordFieldComponent(
             VisualTransformation.None
         }
     )
-    if (fieldNameErrorState.value) {
-        Text(text = stringResource(id = R.string.required), color = Color.Red)
-    }
 }

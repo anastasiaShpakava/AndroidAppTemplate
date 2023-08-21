@@ -1,7 +1,9 @@
 package com.softteco.template.presentation.features.login.loginComponents.registration
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDirections
@@ -22,7 +24,7 @@ fun RegistrationUserResult(
 ) {
     val context = LocalContext.current
     when (val addUserResponse = viewModel.registerApiResponse) {
-        is ApiResponse.Loading -> ProgressBar()
+        is ApiResponse.Loading -> ProgressBar(Modifier.fillMaxSize())
         is ApiResponse.Success -> {
             CustomAlertDialog(
                 onGoToScreen = {

@@ -10,13 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,9 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +36,7 @@ import com.softteco.template.domain.model.user.LoginAuthDto
 import com.softteco.template.presentation.R
 import com.softteco.template.presentation.features.login.AuthViewModel
 import com.softteco.template.presentation.features.login.LoginComposeFragmentDirections
+import com.softteco.template.presentation.features.login.loginComponents.SimplePasswordField
 
 /**
  * Login screen implementation
@@ -51,11 +45,12 @@ import com.softteco.template.presentation.features.login.LoginComposeFragmentDir
 @Composable
 fun LoginScreen(
     onNavigateToRegistration: (NavDirections) -> Unit,
+    modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
     var logIn by remember { mutableStateOf(false) }
 
-    Column {
+    Column(modifier) {
         Column(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.Center,
@@ -91,39 +86,11 @@ fun LoginScreen(
 
             val passwordVisibility = remember { mutableStateOf(true) }
 
-            OutlinedTextField(
-                value = password.value,
-                onValueChange = {
-                    if (passwordErrorState.value) {
-                        passwordErrorState.value = false
-                    }
-                    password.value = it
-                },
-                isError = passwordErrorState.value,
-                modifier = Modifier.fillMaxWidth(),
-                label = {
-                    Text(text = stringResource(id = R.string.password))
-                },
-                trailingIcon = {
-                    IconButton(onClick = {
-                        passwordVisibility.value = !passwordVisibility.value
-                    }) {
-                        Icon(
-                            imageVector = if (passwordVisibility.value) {
-                                Icons.Default.VisibilityOff
-                            } else {
-                                Icons.Default.Visibility
-                            },
-                            contentDescription = stringResource(R.string.visibility),
-                            tint = Color.Black
-                        )
-                    }
-                },
-                visualTransformation = if (passwordVisibility.value) {
-                    PasswordVisualTransformation()
-                } else {
-                    VisualTransformation.None
-                }
+            SimplePasswordField(
+                password = password,
+                passwordErrorState = passwordErrorState,
+                passwordVisibility,
+                modifier = Modifier.fillMaxWidth()
             )
             if (passwordErrorState.value) {
                 Text(text = stringResource(id = R.string.required), color = Color.Red)
