@@ -38,7 +38,8 @@
                 android:id="@+id/choiсe_first_text"
                 style="@style/ChoiceText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:clickable="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -55,7 +56,8 @@
                 android:id="@+id/choiсe_second_text"
                 style="@style/ChoiceText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:clickable="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +73,8 @@
                 android:id="@+id/choiсe_third_text"
                 style="@style/ChoiceText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:clickable="true"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -3,7 +3,6 @@ package com.softteco.template
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -72,12 +71,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        handleNotification()
-    }
-
     private fun handleNotification() {
         if (intent?.action == Constants.ACTION_NOTIFICATION_REPLY) {
             lifecycleScope.launch {
@@ -97,12 +90,13 @@ class MainActivity : ComponentActivity() {
             val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             manager.createNotificationChannel(channel)
             manager.cancel(NOTIFICATION_ID)
-        } else
+        } else {
             if (intent?.action == ACTION_NOTIFICATION) {
                 val body = intent.getStringExtra("notificationBody")
                 lifecycleScope.launch {
                     Timber.tag("inputted body text:").d(body)
                 }
             }
+        }
     }
 }

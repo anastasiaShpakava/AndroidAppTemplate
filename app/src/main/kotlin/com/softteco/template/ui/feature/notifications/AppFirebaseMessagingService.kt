@@ -7,7 +7,6 @@ import com.softteco.template.utils.NotificationHelper
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-
 @AndroidEntryPoint
 class AppFirebaseMessagingService : FirebaseMessagingService() {
 

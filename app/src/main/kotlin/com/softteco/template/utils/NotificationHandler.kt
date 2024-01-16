@@ -24,6 +24,8 @@ class NotificationHandler(
     private val notificationHelper: NotificationHelper
 ) {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
+    private val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private lateinit var remoteInput: RemoteInput
 
     fun handleMessage(message: RemoteMessage.Notification) {
         coroutineScope.launch {
@@ -114,11 +116,11 @@ class NotificationHandler(
     }
 
     private fun createRemoteInput(): RemoteInput {
-        return RemoteInput.Builder(Constants.NOTIFICATION_REPLY).apply {
-            setLabel(ContextCompat.getString(context, R.string.enter_text))
-        }.build()
+        remoteInput = RemoteInput.Builder(Constants.NOTIFICATION_REPLY)
+            .setLabel(ContextCompat.getString(context, R.string.enter_text))
+            .build()
+        return remoteInput
     }
-
     private fun createReplyAction(
         replyPendingIntent: PendingIntent,
         remoteInput: RemoteInput
@@ -138,13 +140,12 @@ class NotificationHandler(
             Constants.CHANNEL_NAME,
             NotificationManager.IMPORTANCE_DEFAULT
         )
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
     }
 
     private fun showNotification(notificationBuilder: Notification) {
         NotificationManagerCompat.from(context).apply {
-            notify(Constants.NOTIFICATION_ID, notificationBuilder)
+            manager.notify(Constants.NOTIFICATION_ID, notificationBuilder)
         }
     }
 }

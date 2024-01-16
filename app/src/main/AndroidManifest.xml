@@ -52,6 +52,8 @@
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="smart_reply" />
+        <receiver android:name=".ui.feature.notifications.SmartReplyBroadcastReceiver" android:exported="false">
+        </receiver>
     </application>
 
 </manifest>
