@@ -99,12 +99,10 @@ class MainActivity : ComponentActivity() {
             manager.cancel(NOTIFICATION_ID)
         } else
             if (intent?.action == ACTION_NOTIFICATION) {
-                val title = intent.getStringExtra("notificationTitle")
                 val body = intent.getStringExtra("notificationBody")
                 lifecycleScope.launch {
                     Timber.tag("inputted body text:").d(body)
                 }
-                Timber.tag("inputted title text:").d(title)
             }
     }
 }

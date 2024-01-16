@@ -1,6 +1,5 @@
 package com.softteco.template.utils
 
-import android.app.PendingIntent
 import android.content.Context
 import android.widget.RemoteViews
 import com.google.firebase.messaging.RemoteMessage
@@ -18,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class NotificationHelper @Inject constructor(private val context: Context) {
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private var repliesList = mutableListOf<String>()
     fun createNotificationLayout(message: RemoteMessage.Notification): RemoteViews {
         val notificationLayout =
@@ -28,7 +27,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         return notificationLayout
     }
 
-    fun createNotificationContentLayout(message: RemoteMessage.Notification, pendingIntent: PendingIntent): RemoteViews {
+    fun createNotificationContentLayout(message: RemoteMessage.Notification): RemoteViews {
         val notificationLayout =
             RemoteViews(context.packageName, R.layout.notification_replies_view)
         coroutineScope.launch {
@@ -38,13 +37,10 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
             notificationLayout.setTextViewText(R.id.notification_title_content, message.title)
             notificationLayout.setTextViewText(R.id.notification_body_content, message.body)
-
-            notificationLayout.setOnClickPendingIntent(R.id.choiсe_first_text,pendingIntent)
-            notificationLayout.setOnClickPendingIntent(R.id.choiсe_second_text,pendingIntent)
-            notificationLayout.setOnClickPendingIntent(R.id.choiсe_third_text,pendingIntent)
         }
         return notificationLayout
     }
+
     suspend fun getChoiceList(message: RemoteMessage.Notification): MutableList<String> =
         suspendCancellableCoroutine { continuation ->
 
@@ -55,8 +51,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
                     message.body.toString(), System.currentTimeMillis()
                 )
             )
-            smartReplyGenerator.suggestReplies(conversation)
-                .addOnSuccessListener { result ->
+            smartReplyGenerator.suggestReplies(conversation).addOnSuccessListener { result ->
                     if (result.status == SmartReplySuggestionResult.STATUS_SUCCESS) {
                         for (suggestion in result.suggestions) {
                             val replyText = suggestion.text.replace("\n", "")
@@ -64,8 +59,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
                         }
                     }
                     continuation.resume(repliesList)
-                }
-                .addOnFailureListener {
+                }.addOnFailureListener {
                     continuation.resumeWithException(it)
                 }
         }

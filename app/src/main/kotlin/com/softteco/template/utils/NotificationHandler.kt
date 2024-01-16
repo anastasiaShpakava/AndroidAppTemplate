@@ -23,24 +23,37 @@ class NotificationHandler(
     private val context: Context,
     private val notificationHelper: NotificationHelper
 ) {
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
-    private fun createNotificationBuilder(
-        channelId: String,
-        notificationLayout: RemoteViews,
+    fun handleMessage(message: RemoteMessage.Notification) {
+        coroutineScope.launch {
+            val answersList = notificationHelper.getChoiceList(message)
 
-        pendingIntent: PendingIntent,
-        replyAction: NotificationCompat.Action
-    ): Notification {
-        val notificationBuilder = NotificationCompat.Builder(context, channelId)
-        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
-            .setAutoCancel(true)
-            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            .setCustomContentView(notificationLayout)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
-            .addAction(replyAction)
+            val notificationLayout = notificationHelper.createNotificationLayout(message)
+            val channelId = context.getString(R.string.default_notification_channel_id)
 
-        return notificationBuilder.build()
+            val notificationBuilder = if (answersList.isNotEmpty()) {
+                val notificationContentLayout =
+                    notificationHelper.createNotificationContentLayout(message)
+                createNotificationBuilderWithContent(
+                    channelId,
+                    notificationLayout,
+                    notificationContentLayout,
+                    createPendingIntent(createNotificationIntent(message)),
+                    createReplyAction(createPendingIntent(createReplyIntent()), createRemoteInput())
+                )
+            } else {
+                createNotificationBuilder(
+                    channelId,
+                    notificationLayout,
+                    createPendingIntent(createNotificationIntent(message)),
+                    createReplyAction(createPendingIntent(createReplyIntent()), createRemoteInput())
+                )
+            }
+
+            createNotificationChannel(channelId)
+            showNotification(notificationBuilder)
+        }
     }
 
     private fun createNotificationBuilderWithContent(
@@ -50,57 +63,62 @@ class NotificationHandler(
         pendingIntent: PendingIntent,
         replyAction: NotificationCompat.Action
     ): Notification {
-        val notificationBuilder = NotificationCompat.Builder(context, channelId)
-        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
-            .setAutoCancel(true)
-            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            .setCustomContentView(notificationLayout)
-            .setCustomBigContentView(notificationContentLayout)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
-            .addAction(replyAction)
+        return NotificationCompat.Builder(context, channelId).apply {
+            setSmallIcon(R.mipmap.ic_launcher)
+            setAutoCancel(true)
+            setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            setCustomContentView(notificationLayout)
+            setCustomBigContentView(notificationContentLayout)
+            setPriority(NotificationCompat.PRIORITY_HIGH)
+            setContentIntent(pendingIntent)
+            addAction(replyAction)
+        }.build()
+    }
 
-        return notificationBuilder.build()
+    private fun createNotificationBuilder(
+        channelId: String,
+        notificationLayout: RemoteViews,
+        pendingIntent: PendingIntent,
+        replyAction: NotificationCompat.Action
+    ): Notification {
+        return NotificationCompat.Builder(context, channelId).apply {
+            setSmallIcon(R.mipmap.ic_launcher)
+            setAutoCancel(true)
+            setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            setCustomContentView(notificationLayout)
+            setPriority(NotificationCompat.PRIORITY_HIGH)
+            setContentIntent(pendingIntent)
+            addAction(replyAction)
+        }.build()
     }
 
     private fun createReplyIntent(): Intent {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.apply {
+        return Intent(context, MainActivity::class.java).apply {
             action = Constants.ACTION_NOTIFICATION_REPLY
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra(Notification.EXTRA_NOTIFICATION_ID, 0)
         }
-        return intent
     }
 
     private fun createNotificationIntent(message: RemoteMessage.Notification): Intent {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.apply {
+        return Intent(context, MainActivity::class.java).apply {
             action = Constants.ACTION_NOTIFICATION
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra("notificationTitle", message.title)
             putExtra("notificationBody", message.body)
         }
-        return intent;
     }
 
     private fun createPendingIntent(intent: Intent): PendingIntent {
-        return PendingIntent.getActivity(
-            context,
-            0,
-            intent,
-            PendingIntent.FLAG_MUTABLE
-        )
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE)
     }
 
     private fun createRemoteInput(): RemoteInput {
-        val remoteInput =
-            RemoteInput.Builder(Constants.NOTIFICATION_REPLY).run {
-                setLabel(ContextCompat.getString(context, R.string.enter_text))
-                    .build()
-            }
-        return remoteInput
+        return RemoteInput.Builder(Constants.NOTIFICATION_REPLY).apply {
+            setLabel(ContextCompat.getString(context, R.string.enter_text))
+        }.build()
     }
+
     private fun createReplyAction(
         replyPendingIntent: PendingIntent,
         remoteInput: RemoteInput
@@ -109,53 +127,24 @@ class NotificationHandler(
             0,
             ContextCompat.getString(context, R.string.reply),
             replyPendingIntent
-        ).addRemoteInput(remoteInput)
+        )
+            .addRemoteInput(remoteInput)
             .build()
     }
 
-    private val coroutineScope = CoroutineScope(Dispatchers.Default)
-    fun handleMessage(message: RemoteMessage.Notification) {
-        coroutineScope.launch {
-            val answersList = notificationHelper.getChoiceList(message)
+    private fun createNotificationChannel(channelId: String) {
+        val channel = NotificationChannel(
+            channelId,
+            Constants.CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+    }
 
-            val notificationLayout = notificationHelper.createNotificationLayout(message)
-
-            val notificationBuilder = if (answersList.isNotEmpty()) {
-                val notificationContentLayout =
-                    notificationHelper.createNotificationContentLayout(
-                        message,
-                        createPendingIntent(createReplyIntent())
-                    )
-                createNotificationBuilderWithContent(
-                    context.getString(R.string.default_notification_channel_id),
-                    notificationLayout,
-                    notificationContentLayout,
-                    createPendingIntent(createNotificationIntent(message)),
-                    createReplyAction(createPendingIntent(createReplyIntent()), createRemoteInput())
-                )
-            } else {
-                createNotificationBuilder(
-                    context.getString(R.string.default_notification_channel_id),
-                    notificationLayout,
-                    createPendingIntent(createNotificationIntent(message)),
-                    createReplyAction(createPendingIntent(createReplyIntent()), createRemoteInput())
-                )
-            }
-
-            val channelId =
-                ContextCompat.getString(context, R.string.default_notification_channel_id)
-            val channel = NotificationChannel(
-                channelId,
-                Constants.CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-
-            val manager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            manager.createNotificationChannel(channel)
-            NotificationManagerCompat.from(context).apply {
-                manager.notify(Constants.NOTIFICATION_ID, notificationBuilder)
-            }
+    private fun showNotification(notificationBuilder: Notification) {
+        NotificationManagerCompat.from(context).apply {
+            notify(Constants.NOTIFICATION_ID, notificationBuilder)
         }
     }
 }
